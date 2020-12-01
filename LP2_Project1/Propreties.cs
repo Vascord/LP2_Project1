@@ -12,15 +12,15 @@ namespace LP2_Project1
     public class Propreties
     {
         public string File {get; private set;}
-        public string _name {get; private set;}
-        public string _type {get; private set;}
-        public string _search {get; private set;}
-        public string _discoveryMethod {get; private set;}
-        public int[] _discYear {get; private set;}
-        public float[] _plOrbper {get; private set;}
-        public float[] _plRade {get; private set;}
-        public float[] _plMasse {get; private set;}
-        public float[] _plEqt {get; private set;}
+        public string Name {get; private set;}
+        public string Type {get; private set;}
+        public string Search {get; private set;}
+        public string DiscoveryMethod {get; private set;}
+        public int[] DiscYear {get; private set;}
+        public float[] PlOrbper {get; private set;}
+        public float[] PlRade {get; private set;}
+        public float[] PlMasse {get; private set;}
+        public float[] PlEqt {get; private set;}
         public float _stTeff {get; private set;}
         public float _stRad {get; private set;}
         public float _stMass {get; private set;}
@@ -35,16 +35,24 @@ namespace LP2_Project1
 
         private Propreties(string search, string type, string name)
         {
-            this._search = search;
-            this._type = type;
-            this._name = name;
+            this.Search = search;
+            this.Type = type;
+            this.Name = name;
         }
 
-        private Propreties(string search, string type, float[] eqt)
+        private Propreties(string search, string type, string name, 
+            string discMethod, int[] discYear, float[] eqt, float[] orbPer, 
+            float[] rade, float[] masse)
         {
-            this._search = search;
-            this._type = type;
-            this._plEqt = eqt;
+            this.Search = search;
+            this.Type = type;
+            this.Name = name;
+            this.DiscoveryMethod = discMethod;
+            this.DiscYear = discYear;
+            this.PlEqt = eqt;
+            this.PlOrbper = orbPer;
+            this.PlRade = rade;
+            this.PlMasse = masse;
         }
 
         public static Propreties ReadArgs(string[] args)
@@ -59,9 +67,10 @@ namespace LP2_Project1
                     type = "planet";
                     search = "search";
                     propreties = SearchPlanetsOption(args, type, search);
-                    return new Propreties();
-                    // break;
+                    break;
                 case "search-stars":
+                    // type = "planet";
+                    // search = "search";
                     // propreties = SearchStarsOption(args);
                     return new Propreties();
                     // break;
@@ -88,14 +97,31 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
-            string name = "";
+            string name = null;
+            string discMethod = null;
+            int[] discYear = new int [2];
             float[] eqt = new float[2];
+            float[] orbPer = new float [2];
+            float[] rade = new float [2];
+            float[] masse = new float [2];
 
             foreach(string arg in args)
             {
                 arg.ToLower();
 
-                if((arg == "--eqt-min") || (arg == "--eqt-max"))
+                if(arg == "--pl_name")
+                {
+                    name = args[++index].ToLower();
+                    --index;
+                }
+
+                else if(arg == "--discmethod")
+                {
+                    discMethod = args[++index].ToLower();
+                    --index;
+                }
+
+                else if((arg == "--eqt-min") || (arg == "--eqt-max"))
                 {
                     if(arg == "--eqt-min")
                     {
@@ -112,16 +138,79 @@ namespace LP2_Project1
                     }
                 }
 
-                else if(arg == "--pl_name")
+                else if((arg == "--masse-min") || (arg == "--masse-max"))
                 {
-                    name = args[++index].ToLower();
-                    --index;
+                    if(arg == "--masse-min")
+                    {
+                        masse[0] = float.Parse(args[++index], 
+                            CultureInfo.InvariantCulture.NumberFormat); 
+                        --index;
+                    }
+
+                    else if(arg == "--masse-max")
+                    {
+                        masse[1] = float.Parse(args[++index], 
+                            CultureInfo.InvariantCulture.NumberFormat); 
+                        --index;
+                    }
+                }
+
+                else if((arg == "--rade-min") || (arg == "--rade-max"))
+                {
+                    if(arg == "--rade-min")
+                    {
+                        rade[0] = float.Parse(args[++index], 
+                            CultureInfo.InvariantCulture.NumberFormat); 
+                        --index;
+                    }
+
+                    else if(arg == "--rade-max")
+                    {
+                        rade[1] = float.Parse(args[++index], 
+                            CultureInfo.InvariantCulture.NumberFormat); 
+                        --index;
+                    }
+                }
+
+                else if((arg == "--orbper-min") || (arg == "--orbper-max"))
+                {
+                    if(arg == "--orbper-min")
+                    {
+                        orbPer[0] = float.Parse(args[++index], 
+                            CultureInfo.InvariantCulture.NumberFormat); 
+                        --index;
+                    }
+
+                    else if(arg == "--orbper-max")
+                    {
+                        orbPer[1] = float.Parse(args[++index], 
+                            CultureInfo.InvariantCulture.NumberFormat); 
+                        --index;
+                    }
+                }
+
+                else if((arg == "--discyear-min") || (arg == "--discyear-max"))
+                {
+                    if(arg == "--discyear-min")
+                    {
+                        discYear[0] = int.Parse(args[++index], 
+                            CultureInfo.InvariantCulture.NumberFormat); 
+                        --index;
+                    }
+
+                    else if(arg == "--discyear-max")
+                    {
+                        discYear[1] = int.Parse(args[++index], 
+                            CultureInfo.InvariantCulture.NumberFormat); 
+                        --index;
+                    }
                 }
 
                 index++;
             }
 
-            return new Propreties(search, type, eqt);
+            return new Propreties(search, type, name, discMethod, discYear, 
+                eqt, orbPer, rade, masse);
         }
 
         // private static Propreties SearchStarsOption(string[] args)
