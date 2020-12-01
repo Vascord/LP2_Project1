@@ -33,17 +33,19 @@ namespace LP2_Project1
             Environment.Exit(0);
         }
 
-        private Propreties(string search, string type, string name)
+        private Propreties(string file, string search, string type, string name)
         {
+            this.File = file;
             this.Search = search;
             this.Type = type;
             this.Name = name;
         }
 
-        private Propreties(string search, string type, string name, 
+        private Propreties(string file, string search, string type, string name, 
             string discMethod, int[] discYear, float[] eqt, float[] orbPer, 
             float[] rade, float[] masse)
         {
+            this.File = file;
             this.Search = search;
             this.Type = type;
             this.Name = name;
@@ -97,6 +99,7 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
+            string file = null;
             string name = null;
             string discMethod = null;
             int[] discYear = new int [2];
@@ -109,7 +112,13 @@ namespace LP2_Project1
             {
                 arg.ToLower();
 
-                if(arg == "--pl_name")
+                if(arg == "--file")
+                {
+                    file = args[++index].ToLower();
+                    --index;
+                }
+
+                else if(arg == "--pl_name")
                 {
                     name = args[++index].ToLower();
                     --index;
@@ -209,8 +218,8 @@ namespace LP2_Project1
                 index++;
             }
 
-            return new Propreties(search, type, name, discMethod, discYear, 
-                eqt, orbPer, rade, masse);
+            return new Propreties(file, search, type, name, discMethod, 
+                discYear, eqt, orbPer, rade, masse);
         }
 
         // private static Propreties SearchStarsOption(string[] args)
@@ -222,7 +231,8 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
-            string name = "";
+            string file = null;
+            string name = null;
 
             foreach(string arg in args)
             {
@@ -238,7 +248,7 @@ namespace LP2_Project1
                 index++;
             }
 
-            return new Propreties(search, type, name);
+            return new Propreties(file, search, type, name);
         }
     }
 }

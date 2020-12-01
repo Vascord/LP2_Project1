@@ -25,7 +25,7 @@ namespace LP2_Project1
             Propreties propreties = Propreties.ReadArgs(args);
 
             // Extract data from the file the user wants
-            ReadFile read = new ReadFile(propreties.filename);
+            ReadFile read = new ReadFile(propreties.File);
             
         }
     }
