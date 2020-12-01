@@ -21,11 +21,12 @@ namespace LP2_Project1
         /// wants.</param>
         static void Main(string[] args)
         {
-            // Extract data from the file the user wants
-            ReadFile read = new ReadFile("pl_est.csv");
-
             // Takes the propreties from args so later on you can filter them
             Propreties propreties = Propreties.ReadArgs(args);
+
+            // Extract data from the file the user wants
+            ReadFile read = new ReadFile(propreties.filename);
+            
         }
     }
 }
