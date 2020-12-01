@@ -13,8 +13,6 @@ namespace LP2_Project1
 
         private List<Planets> planets = new List<Planets>();
 
-        
-
         public ReadFile(string filename)
         {
             this.filename = filename;
@@ -93,15 +91,11 @@ namespace LP2_Project1
                     string[] colums = line.Split(',');
                     planets.Add(new Planets(colums[pl_name], colums[hostname],
                         colums[discoverymethod], colums[disc_year], colums[pl_orbper], 
-                        colums[pl_rade], colums[pl_masse], colums[pl_eqt], 
-                        colums[st_teff], colums[st_rad], colums[st_mass],
-                        colums[st_age] ,colums[st_vsin] ,colums[st_rotp], colums[sy_dist]));
+                        colums[pl_rade], colums[pl_masse], colums[pl_eqt]));
                 }
             }
-            foreach(Planets a in planets)
-            {
-                Console.WriteLine(a.st_mass);
-            }
+            
         }
+
     }
 }
