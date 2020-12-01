@@ -14,6 +14,7 @@ namespace LP2_Project1
         public string File {get; private set;}
         public string _name {get; private set;}
         public string _type {get; private set;}
+        public string _search {get; private set;}
         public string _discoveryMethod {get; private set;}
         public int[] _discYear {get; private set;}
         public float[] _plOrbper {get; private set;}
@@ -32,30 +33,32 @@ namespace LP2_Project1
             Environment.Exit(0);
         }
 
-        private Propreties(string type, string name)
+        private Propreties(string search, string type, string name)
         {
+            this._search = search;
             this._type = type;
             this._name = name;
         }
 
-        private Propreties(string type, float[] eqt)
+        private Propreties(string search, string type, float[] eqt)
         {
+            this._search = search;
             this._type = type;
             this._plEqt = eqt;
-
-            Console.WriteLine(_plEqt);
         }
 
         public static Propreties ReadArgs(string[] args)
         {
             string type;
+            string search;
             Propreties propreties;
 
             switch (args[0])
             {
                 case "search-planets":
                     type = "planet";
-                    propreties = SearchPlanetsOption(args, type);
+                    search = "search";
+                    propreties = SearchPlanetsOption(args, type, search);
                     return new Propreties();
                     // break;
                 case "search-stars":
@@ -64,11 +67,13 @@ namespace LP2_Project1
                     // break;
                 case "planet-info":
                     type = "planet";
-                    propreties = InfoOption(args, type);
+                    search = "info";
+                    propreties = InfoOption(args, type, search);
                     break;
                 case "star-info":
                     type = "star";
-                    propreties = InfoOption(args, type);
+                    search = "info";
+                    propreties = InfoOption(args, type, search);
                     break;
                 default:
                     Console.WriteLine(
@@ -79,7 +84,8 @@ namespace LP2_Project1
             return propreties;
         }
 
-        private static Propreties SearchPlanetsOption(string[] args,string type)
+        private static Propreties SearchPlanetsOption(string[] args,string type,
+            string search)
         {
             int index = 0;
             string name = "";
@@ -115,7 +121,7 @@ namespace LP2_Project1
                 index++;
             }
 
-            return new Propreties(type, eqt);
+            return new Propreties(search, type, eqt);
         }
 
         // private static Propreties SearchStarsOption(string[] args)
@@ -123,7 +129,8 @@ namespace LP2_Project1
 
         // }
 
-        private static Propreties InfoOption(string[] args, string type)
+        private static Propreties InfoOption(string[] args, string type, 
+            string search)
         {
             int index = 0;
             string name = "";
@@ -142,7 +149,7 @@ namespace LP2_Project1
                 index++;
             }
 
-            return new Propreties(type, name);
+            return new Propreties(search, type, name);
         }
     }
 }
