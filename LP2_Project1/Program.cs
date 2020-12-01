@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LP2_Project1
 {
@@ -21,9 +22,7 @@ namespace LP2_Project1
         static void Main(string[] args)
         {
             // Extract data from the file the user wants
-            /* 
-            Futur Code here.
-            */
+            ReadFile read = new ReadFile("pl_est.csv");
 
             // Takes the propreties from args so later on you can filter them
             Propreties propreties = Propreties.ReadArgs(args);
