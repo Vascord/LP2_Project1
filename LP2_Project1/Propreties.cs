@@ -74,8 +74,7 @@ namespace LP2_Project1
 
         public static Propreties ReadArgs(string[] args)
         {
-            string type;
-            string search;
+            string type, search;
             Propreties propreties;
 
             switch (args[0])
@@ -200,8 +199,7 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
-            string file = null;
-            string name = null;
+            string file = null, name = null;
 
             foreach(string arg in args)
             {
