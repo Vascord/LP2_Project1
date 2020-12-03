@@ -117,14 +117,9 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
-            string file = null;
-            string name = null;
-            string discMethod = null;
-            float[] discYear = new float [2];
-            float[] eqt = new float[2];
-            float[] orbPer = new float [2];
-            float[] rade = new float [2];
-            float[] masse = new float [2];
+            string file = null, name = null, discMethod = null;
+            float[] discYear = new float [2], eqt = new float[2], 
+            orbPer = new float [2], rade = new float [2], masse = new float [2];
 
             foreach(string arg in args)
             {
@@ -163,14 +158,10 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
-            string file = null;
-            string name = null;
-            float[] teff = new float [2];
-            float[] rad = new float[2];
-            float[] mass = new float [2];
-            float[] vsin = new float [2];
-            float[] rotp = new float [2];
-            float[] dist = new float[2];
+            string file = null, name = null;
+            float[] teff = new float [2], rad = new float[2], 
+            mass = new float [2], vsin = new float [2], rotp = new float [2],
+            dist = new float[2];
 
             foreach(string arg in args)
             {
