@@ -54,6 +54,7 @@ namespace LP2_Project1
             this.PlOrbper = orbPer;
             this.PlRade = rade;
             this.PlMasse = masse;
+            
         }
 
         private Propreties(string file,string search,string type,string name,
