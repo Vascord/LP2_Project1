@@ -21,11 +21,22 @@ namespace LP2_Project1
         /// wants.</param>
         static void Main(string[] args)
         {
+
+            List<Planets> planets;
+            List<Stars> stars;
+
             // Takes the propreties from args so later on you can filter them
             Propreties propreties = Propreties.ReadArgs(args);
 
             // Extract data from the file the user wants
-            ReadFile read = new ReadFile(propreties.File);
+            ReadFile file = new ReadFile("pl_est.csv");
+
+            planets = file.planets;
+            stars = file.stars;
+
+            Search search = new Search(planets, propreties);
+
+            
             
         }
     }
