@@ -51,7 +51,7 @@ namespace LP2_Project1
             {
                 if (pr.GetValue(propreties) != null)
                 {
-                    Console.WriteLine(pr.Name);
+                    //Console.WriteLine(pr.Name);
                     switch(pr.Name)
                     {
                         case "DiscoveryMethod":
@@ -62,6 +62,7 @@ namespace LP2_Project1
                                 propreties.DiscYear[0] && ToNullableFloat(pl.disc_year) <= 
                                 propreties.DiscYear[1]);
                             break;
+                        
                         case "PlOrbper":
                             p = p.Where(pl => ToNullableFloat(pl.pl_orbper) >= 
                                 propreties.PlOrbper[0] && ToNullableFloat(pl.pl_orbper) <= 
@@ -87,7 +88,7 @@ namespace LP2_Project1
                     }
                 }
             }
-            //output();
+            output();
             
         }
 
