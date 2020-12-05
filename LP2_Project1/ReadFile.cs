@@ -92,9 +92,9 @@ namespace LP2_Project1
                 else
                 {
                     string[] colums = line.Split(',');
-                    planets.Add(new Planets(colums[pl_name].ToLower(), colums[hostname],
-                        colums[discoverymethod], colums[disc_year], colums[pl_orbper], 
-                        colums[pl_rade], colums[pl_masse], colums[pl_eqt]));
+                    planets.Add(new Planets(colums[pl_name].ToLower().Trim(), colums[hostname].ToLower().Trim(),
+                        colums[discoverymethod].ToLower().Trim(), colums[disc_year].ToLower().Trim(), colums[pl_orbper].ToLower().Trim(), 
+                        colums[pl_rade].ToLower().Trim(), colums[pl_masse].ToLower().Trim(), colums[pl_eqt].Trim()));
                 }
             }
             
