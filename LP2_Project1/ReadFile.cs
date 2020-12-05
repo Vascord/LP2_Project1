@@ -11,11 +11,14 @@ namespace LP2_Project1
         private string filename;
         private bool firstLine = true;
 
-        private List<Planets> planets = new List<Planets>();
+        public List<Planets> planets {get;}
+        public List<Stars> stars {get;}
 
         public ReadFile(string filename)
         {
             this.filename = filename;
+            planets = new List<Planets>();
+            stars = new List<Stars>();
             File();
         }
         private void File()
@@ -89,7 +92,7 @@ namespace LP2_Project1
                 else
                 {
                     string[] colums = line.Split(',');
-                    planets.Add(new Planets(colums[pl_name], colums[hostname],
+                    planets.Add(new Planets(colums[pl_name].ToLower(), colums[hostname],
                         colums[discoverymethod], colums[disc_year], colums[pl_orbper], 
                         colums[pl_rade], colums[pl_masse], colums[pl_eqt]));
                 }
