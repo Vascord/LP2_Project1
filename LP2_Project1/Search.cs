@@ -58,7 +58,7 @@ namespace LP2_Project1
                                 propreties.DiscoveryMethod);
                             break;
                         case "DiscYear":
-                            SearchFloats(propreties.DiscYear, "pl_disc_year");
+                            SearchFloats(propreties.DiscYear, "disc_year");
                             break;
 
                         case "PlOrbper":
