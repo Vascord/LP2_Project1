@@ -15,6 +15,7 @@ namespace LP2_Project1
         public string Type {get; private set;}
         public string Search {get; private set;}
         public string DiscoveryMethod {get; private set;}
+        public string CVS {get; private set;}
         public float?[] DiscYear {get; private set;}
         public float?[] PlOrbper {get; private set;}
         public float?[] PlRade {get; private set;}
@@ -32,23 +33,26 @@ namespace LP2_Project1
             Environment.Exit(0);
         }
 
-        private Propreties(string file, string search, string type, string name)
+        private Propreties(string file, string search, string type, string name,
+             string csv)
         {
             this.File = file;
             this.Search = search;
             this.Type = type;
             this.Name = name;
+            this.CVS = csv;
         }
 
         private Propreties(string file, string search, string type, string name, 
-            string discMethod, float?[] discYear, float?[] eqt, float?[] orbPer, 
-            float?[] rade, float?[] masse)
+            string discMethod, string cvs, float?[] discYear, float?[] eqt, 
+            float?[] orbPer, float?[] rade, float?[] masse)
         {
             this.File = file;
             this.Search = search;
             this.Type = type;
             this.Name = name;
             this.DiscoveryMethod = discMethod;
+            this.CVS = cvs;
             this.DiscYear = discYear;
             this.PlEqt = eqt;
             this.PlOrbper = orbPer;
@@ -57,14 +61,15 @@ namespace LP2_Project1
             
         }
 
-        private Propreties(string file,string search,string type,string name,
-        float?[] teff,float?[] rad,float?[] mass,float?[] vsin,float?[] rotp,
-        float?[] dist)
+        private Propreties(string file,string search,string type,string name, 
+        string cvs,float?[] teff,float?[] rad,float?[] mass,float?[] vsin,
+        float?[] rotp,float?[] dist)
         {
             this.File = file;
             this.Search = search;
             this.Type = type;
             this.Name = name;
+            this.CVS = cvs;
             this.StTeff = teff;
             this.StRad = rad;
             this.StMass = mass;
@@ -117,7 +122,7 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
-            string file = null, name = null, discMethod = null;
+            string file = null, name = null, discMethod = null, cvs = null;
             float?[] discYear = new float? [2], eqt = new float? [2], 
             orbPer = new float? [2], rade = new float? [2], 
             masse = new float? [2];
@@ -125,6 +130,8 @@ namespace LP2_Project1
             foreach(string arg in args)
             {
                 arg.ToLower();
+                
+                if(arg == "--cvs") cvs = "on";
 
                 file = CondString(file, arg, "--file", index, args);
 
@@ -151,7 +158,7 @@ namespace LP2_Project1
                 index++;
             }
 
-            return new Propreties(file, search, type, name, discMethod, 
+            return new Propreties(file, search, type, name, discMethod, cvs,
                 discYear, eqt, orbPer, rade, masse);
         }
 
@@ -159,7 +166,7 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
-            string file = null, name = null;
+            string file = null, name = null, cvs = null;
             float?[] teff = new float? [2], rad = new float? [2], 
             mass = new float? [2], vsin = new float? [2], rotp = new float? [2],
             dist = new float? [2];
@@ -167,6 +174,8 @@ namespace LP2_Project1
             foreach(string arg in args)
             {
                 arg.ToLower();
+
+                if(arg == "--cvs") cvs = "on";
 
                 file = CondString(file, arg, "--file", index, args);
 
@@ -193,7 +202,7 @@ namespace LP2_Project1
                 index++;
             }
 
-            return new Propreties(file, search, type, name, teff, 
+            return new Propreties(file, search, type, name, cvs, teff,
                 rad, mass, vsin, rotp, dist);
         }
 
@@ -201,11 +210,13 @@ namespace LP2_Project1
             string search)
         {
             int index = 0;
-            string file = null, name = null;
+            string file = null, name = null, cvs = null;
 
             foreach(string arg in args)
             {
                 arg.ToLower();
+
+                if(arg == "--cvs") cvs = "on";
 
                 if(((arg == "--st_name") && (type == "star")) || 
                 ((arg == "--pl_name") && (type == "planet")))
@@ -217,7 +228,7 @@ namespace LP2_Project1
                 index++;
             }
 
-            return new Propreties(file, search, type, name);
+            return new Propreties(file, search, type, name, cvs);
         }
 
         private static float?[] FloatMinMax(float?[] cond, string arg, 
