@@ -109,6 +109,10 @@ namespace LP2_Project1
                     propreties = InfoOption(args, type, search);
                     break;
 
+                case "help":
+                    //Temos de fazer un help struct ou alguma coisa assim
+                    return new Propreties();
+
                 default:
                     Console.WriteLine(
                     "You will need to specify which search you want to do.");
