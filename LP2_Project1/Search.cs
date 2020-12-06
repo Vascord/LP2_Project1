@@ -100,7 +100,9 @@ namespace LP2_Project1
                     }
                 }
             }
-            output();
+
+            Interface UI = new Interface(p, propreties.CVS);
+            //output();
             
         }
 

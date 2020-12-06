@@ -108,9 +108,8 @@ namespace LP2_Project1
                     search = "info";
                     propreties = InfoOption(args, type, search);
                     break;
-
                 case "help":
-                    //Temos de fazer un help struct ou alguma coisa assim
+                    Interface UI = new Interface();
                     return new Propreties();
 
                 default:
