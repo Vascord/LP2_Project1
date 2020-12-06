@@ -29,7 +29,11 @@ namespace LP2_Project1
             string[] lines = System.IO.File.ReadAllLines(path);
             foreach(string line in lines)
             {
-                if (line[0] == '#'){}
+                if (String.IsNullOrEmpty(line)){}
+                else if (line[0] == '#')
+                {
+
+                }
                 else if (firstLine)
                 {
                     string[] colums = line.Split(',');

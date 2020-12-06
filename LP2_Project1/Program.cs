@@ -29,7 +29,7 @@ namespace LP2_Project1
             Propreties propreties = Propreties.ReadArgs(args);
 
             // Extract data from the file the user wants
-            ReadFile file = new ReadFile("pl_est.csv");
+            ReadFile file = new ReadFile("test3_ok.csv");
 
             planets = file.planets;
             stars = file.stars;
