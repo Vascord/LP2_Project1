@@ -37,9 +37,7 @@ namespace LP2_Project1
 
         private void Planet_Star_Info()
         {
-            p = planets.Where( pl => pl.pl_name == propreties.Name);
-            output();
-            
+            p = planets.Where( pl => pl.pl_name == propreties.Name);       
         }
         private void Planet_Star_search()
         {
@@ -47,85 +45,43 @@ namespace LP2_Project1
 
             PropertyInfo[] prop = typeof(Propreties).GetProperties();
 
+            PropertyInfo[] pl_prop = typeof(Planets).GetProperties();
+
             foreach (PropertyInfo pr in prop)
             {
                 if (pr.GetValue(propreties) != null)
                 {
-                    //Console.WriteLine(pr.Name);
                     switch(pr.Name)
                     {
                         case "DiscoveryMethod":
-                            p = p.Where( pl => pl.discoverymethod == propreties.DiscoveryMethod);
+                            p = p.Where( pl => pl.discoverymethod == 
+                                propreties.DiscoveryMethod);
                             break;
                         case "DiscYear":
-                            if (ToNullableFloat(propreties.DiscYear[0]) != null)
-                            {
-                                p = p.Where(pl => ToNullableFloat(pl.disc_year) >= ToNullableFloat(propreties.DiscYear[0]));
-                            }                          
-                            if (ToNullableFloat(propreties.DiscYear[1]) != null)
-                            {
-                                p = p.Where(pl => ToNullableFloat(pl.disc_year) <= 
-                                    ToNullableFloat(propreties.DiscYear[1]));
-                            }
+                            SearchFloats(propreties.DiscYear, "pl_disc_year");
                             break;
-                        /*
+
                         case "PlOrbper":
-                            p = p.Where(pl => ToNullableFloat(pl.pl_orbper) >= 
-                                ToNullableFloat(propreties.PlOrbper[0]) && ToNullableFloat(pl.pl_orbper) <= 
-                                ToNullableFloat(propreties.PlOrbper[1]));
+                            SearchFloats(propreties.PlOrbper, "pl_orbper");
                             break;
+
                         case "PlRade":
-                            p = p.Where(pl => ToNullableFloat(pl.pl_rade) >= 
-                                propreties.PlRade[0] && ToNullableFloat(pl.pl_rade) <= 
-                                propreties.PlRade[1]);
+                            SearchFloats(propreties.PlRade, "pl_rade");
                             break;
+
                         case "PlMasse":
-                            p = p.Where(pl => ToNullableFloat(pl.pl_masse) >= 
-                                propreties.PlMasse[0] && ToNullableFloat(pl.pl_masse) <= 
-                                propreties.PlMasse[1]);
-                            break;*/
+                            SearchFloats(propreties.PlMasse, "pl_masse");
+                            break;
+
                         case "PlEqt":
-                                if (ToNullableFloat(propreties.PlEqt[0]) != null)
-                                {
-                                    p = p.Where(pl => ToNullableFloat(pl.pl_eqt) >= 
-                                        ToNullableFloat(propreties.PlEqt[0]));
-                                    
-                                }
-                                if (ToNullableFloat(propreties.PlEqt[1]) != null)
-                                {
-                                    p = p.Where(pl => ToNullableFloat(pl.pl_eqt) <= 
-                                        ToNullableFloat(propreties.PlEqt[1]));
-                                }
+                            SearchFloats(propreties.PlEqt, "pl_eqt");
                             break;
                     }
                 }
             }
 
             Interface UI = new Interface(p, propreties.CVS);
-            //output();
             
-        }
-
-        private void output()
-        {
-            Console.WriteLine();
-            Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20}", 
-                "Planet Name", "Star Name", "Disc. Method", "Year", "Orbital", "Radius"
-                , "Mass", "Eq. Temp.");
-            Console.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------");
-            foreach(Planets l in p)
-            {
-                Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20}",
-                l.pl_name, l.hostname, l.discoverymethod, l.disc_year, l.pl_orbper, l.pl_rade,
-                l.pl_masse, l.pl_eqt);
-            }
-            
-        }
-        private int? ToNullableInt(string s)
-        {
-            int i;
-            if (int.TryParse(s, out i)) return i;
-            return null;
         }
 
         private float? ToNullableFloat(string s)
@@ -133,6 +89,25 @@ namespace LP2_Project1
             float i;
             if (float.TryParse(s, out i)) return i;
             return null;
+        }
+
+        private void SearchFloats(string[] minmax, string value)
+        {
+            PropertyInfo[] properties = typeof(Planets).GetProperties();
+
+            if (ToNullableFloat(minmax[0]) != null)
+            {
+                p = p.Where(pl => ToNullableFloat(Convert.
+                ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                    >= ToNullableFloat(minmax[0]));
+
+            }
+            if (ToNullableFloat(minmax[1]) != null)
+            {
+                p = p.Where(pl => ToNullableFloat(Convert.
+                ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                    <= ToNullableFloat(minmax[1]));
+            }
         }
     }
 }
