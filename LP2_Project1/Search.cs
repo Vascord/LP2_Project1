@@ -58,15 +58,21 @@ namespace LP2_Project1
                             p = p.Where( pl => pl.discoverymethod == propreties.DiscoveryMethod);
                             break;
                         case "DiscYear":
-                            p = p.Where(pl => ToNullableFloat(pl.disc_year) >= 
-                                propreties.DiscYear[0] && ToNullableFloat(pl.disc_year) <= 
-                                propreties.DiscYear[1]);
+                            if (ToNullableFloat(propreties.DiscYear[0]) != null)
+                            {
+                                p = p.Where(pl => ToNullableFloat(pl.disc_year) >= ToNullableFloat(propreties.DiscYear[0]));
+                            }                          
+                            if (ToNullableFloat(propreties.DiscYear[1]) != null)
+                            {
+                                p = p.Where(pl => ToNullableFloat(pl.disc_year) <= 
+                                    ToNullableFloat(propreties.DiscYear[1]));
+                            }
                             break;
-                        
+                        /*
                         case "PlOrbper":
                             p = p.Where(pl => ToNullableFloat(pl.pl_orbper) >= 
-                                propreties.PlOrbper[0] && ToNullableFloat(pl.pl_orbper) <= 
-                                propreties.PlOrbper[1]);
+                                ToNullableFloat(propreties.PlOrbper[0]) && ToNullableFloat(pl.pl_orbper) <= 
+                                ToNullableFloat(propreties.PlOrbper[1]));
                             break;
                         case "PlRade":
                             p = p.Where(pl => ToNullableFloat(pl.pl_rade) >= 
@@ -77,13 +83,19 @@ namespace LP2_Project1
                             p = p.Where(pl => ToNullableFloat(pl.pl_masse) >= 
                                 propreties.PlMasse[0] && ToNullableFloat(pl.pl_masse) <= 
                                 propreties.PlMasse[1]);
-                            break;
+                            break;*/
                         case "PlEqt":
-                            p = p.Where(pl => ToNullableFloat(pl.pl_eqt) >= 
-                                propreties.PlEqt[0] && ToNullableFloat(pl.pl_eqt) <= 
-                                propreties.PlEqt[1]);
-                                //Console.WriteLine(propreties.PlEqt[0]);
-                                //Console.WriteLine(propreties.PlEqt[1]);
+                                if (ToNullableFloat(propreties.PlEqt[0]) != null)
+                                {
+                                    p = p.Where(pl => ToNullableFloat(pl.pl_eqt) >= 
+                                        ToNullableFloat(propreties.PlEqt[0]));
+                                    
+                                }
+                                if (ToNullableFloat(propreties.PlEqt[1]) != null)
+                                {
+                                    p = p.Where(pl => ToNullableFloat(pl.pl_eqt) <= 
+                                        ToNullableFloat(propreties.PlEqt[1]));
+                                }
                             break;
                     }
                 }
