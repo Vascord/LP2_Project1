@@ -15,17 +15,17 @@ namespace LP2_Project1
         public string Type {get; private set;}
         public string Search {get; private set;}
         public string DiscoveryMethod {get; private set;}
-        public float[] DiscYear {get; private set;}
-        public float[] PlOrbper {get; private set;}
-        public float[] PlRade {get; private set;}
-        public float[] PlMasse {get; private set;}
-        public float[] PlEqt {get; private set;}
-        public float[] StTeff {get; private set;}
-        public float[] StRad {get; private set;}
-        public float[] StMass {get; private set;}
-        public float[] StVsin {get; private set;}
-        public float[] StRotp {get; private set;}
-        public float[] SyDist {get; private set;}
+        public float?[] DiscYear {get; private set;}
+        public float?[] PlOrbper {get; private set;}
+        public float?[] PlRade {get; private set;}
+        public float?[] PlMasse {get; private set;}
+        public float?[] PlEqt {get; private set;}
+        public float?[] StTeff {get; private set;}
+        public float?[] StRad {get; private set;}
+        public float?[] StMass {get; private set;}
+        public float?[] StVsin {get; private set;}
+        public float?[] StRotp {get; private set;}
+        public float?[] SyDist {get; private set;}
 
         private Propreties()
         {
@@ -41,8 +41,8 @@ namespace LP2_Project1
         }
 
         private Propreties(string file, string search, string type, string name, 
-            string discMethod, float[] discYear, float[] eqt, float[] orbPer, 
-            float[] rade, float[] masse)
+            string discMethod, float?[] discYear, float?[] eqt, float?[] orbPer, 
+            float?[] rade, float?[] masse)
         {
             this.File = file;
             this.Search = search;
@@ -58,8 +58,8 @@ namespace LP2_Project1
         }
 
         private Propreties(string file,string search,string type,string name,
-            float[] teff,float[] rad,float[] mass,float[] vsin,float[] rotp,
-            float[] dist)
+        float?[] teff,float?[] rad,float?[] mass,float?[] vsin,float?[] rotp,
+        float?[] dist)
         {
             this.File = file;
             this.Search = search;
@@ -118,8 +118,9 @@ namespace LP2_Project1
         {
             int index = 0;
             string file = null, name = null, discMethod = null;
-            float[] discYear = new float [2], eqt = new float[2], 
-            orbPer = new float [2], rade = new float [2], masse = new float [2];
+            float?[] discYear = new float? [2], eqt = new float? [2], 
+            orbPer = new float? [2], rade = new float? [2], 
+            masse = new float? [2];
 
             foreach(string arg in args)
             {
@@ -159,9 +160,9 @@ namespace LP2_Project1
         {
             int index = 0;
             string file = null, name = null;
-            float[] teff = new float [2], rad = new float[2], 
-            mass = new float [2], vsin = new float [2], rotp = new float [2],
-            dist = new float[2];
+            float?[] teff = new float? [2], rad = new float? [2], 
+            mass = new float? [2], vsin = new float? [2], rotp = new float? [2],
+            dist = new float? [2];
 
             foreach(string arg in args)
             {
@@ -219,27 +220,35 @@ namespace LP2_Project1
             return new Propreties(file, search, type, name);
         }
 
-        private static float[] FloatMinMax(float[] cond, string arg, 
+        private static float?[] FloatMinMax(float?[] cond, string arg, 
             string name1, string name2, int index, string[] args)
         {
+            float f;
+
             if((arg == name1) || (arg == name2))
             {
                 if(arg == name1)
                 {
-                    cond[0] = int.Parse(args[++index], 
-                        CultureInfo.InvariantCulture.NumberFormat); 
-                    --index;
+                    if (float.TryParse(args[++index], out f))
+                    {
+                        cond[0] = f;
+                        --index;
+                        return cond;
+                    }
                 }
 
                 else if(arg == name2)
                 {
-                    cond[1] = int.Parse(args[++index], 
-                        CultureInfo.InvariantCulture.NumberFormat); 
-                    --index;
+                    if (float.TryParse(args[++index], out f))
+                    {
+                        cond[1] = f;
+                        --index;
+                        return cond;
+                    }
                 }
             }
 
-            return cond;
+            return null;
         }
 
         private static string CondString(string cond, string arg, 
