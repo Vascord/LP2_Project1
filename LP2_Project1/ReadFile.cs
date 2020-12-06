@@ -23,17 +23,14 @@ namespace LP2_Project1
         }
         private void File()
         {
-            int pl_name =0, hostname=0, discoverymethod=0 , disc_year=0 , pl_orbper=0, pl_rade=0 , pl_masse =0, pl_eqt=0,
-                st_teff=0 , st_rad=0 , st_mass=0, st_vsin=0 , st_rotp=0 , sy_dist=0, st_age=0;
+            int? pl_name = null, hostname = null, discoverymethod= null, disc_year= null, pl_orbper= null, pl_rade = null, pl_masse = null, pl_eqt= null,
+                st_teff = null, st_rad = null, st_mass= null, st_vsin = null, st_rotp = null, sy_dist= null, st_age=null;
             string path  = Path.Combine(Environment.CurrentDirectory, filename);
             string[] lines = System.IO.File.ReadAllLines(path);
             foreach(string line in lines)
             {
                 if (String.IsNullOrEmpty(line)){}
-                else if (line[0] == '#')
-                {
-
-                }
+                else if (line[0] == '#'){}
                 else if (firstLine)
                 {
                     string[] colums = line.Split(',');
@@ -96,12 +93,26 @@ namespace LP2_Project1
                 else
                 {
                     string[] colums = line.Split(',');
-                    planets.Add(new Planets(colums[pl_name].ToLower().Trim(), colums[hostname].ToLower().Trim(),
-                        colums[discoverymethod].ToLower().Trim(), colums[disc_year].ToLower().Trim(), colums[pl_orbper].ToLower().Trim(), 
-                        colums[pl_rade].ToLower().Trim(), colums[pl_masse].ToLower().Trim(), colums[pl_eqt].Trim()));
+                    foreach(string s in colums)
+                    {
+                        s.ToLower().Trim();
+                    }
+                    planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].ToLower().Trim(), 
+                        hostname == null ? null : colums[hostname.GetValueOrDefault()].ToLower().Trim(),
+                        discoverymethod == null ? null : colums[discoverymethod.GetValueOrDefault()].ToLower().Trim(), 
+                        disc_year == null ? null : colums[disc_year.GetValueOrDefault()].ToLower().Trim(), 
+                        pl_orbper == null ? null : colums[pl_orbper.GetValueOrDefault()].ToLower().Trim(), 
+                        pl_rade == null ? null : colums[pl_rade.GetValueOrDefault()].ToLower().Trim(), 
+                        pl_masse == null ? null : colums[pl_masse.GetValueOrDefault()].ToLower().Trim(), 
+                        pl_eqt == null ? null : colums[pl_eqt.GetValueOrDefault()].ToLower().Trim()));
                 }
-            }
-            
+            }           
+        }
+        private float? ToNullableFloat(string s)
+        {
+            float i;
+            if (float.TryParse(s, out i)) return i;
+            return null;
         }
 
     }
