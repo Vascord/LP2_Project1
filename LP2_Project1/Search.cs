@@ -37,7 +37,9 @@ namespace LP2_Project1
 
         private void Planet_Star_Info()
         {
-            p = planets.Where( pl => pl.pl_name == propreties.Name);       
+            p = planets.Where( pl => pl.pl_name == propreties.Name);  
+
+            Interface UI = new Interface(p, propreties.CVS);     
         }
         private void Planet_Star_search()
         {

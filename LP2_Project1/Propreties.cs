@@ -221,6 +221,8 @@ namespace LP2_Project1
 
                 if(arg == "--cvs") cvs = "on";
 
+                file = CondString(file, arg, "--file", index, args);
+
                 if(((arg == "--st_name") && (type == "star")) || 
                 ((arg == "--pl_name") && (type == "planet")))
                 {
