@@ -9,25 +9,27 @@ namespace LP2_Project1
 {
     public class Search
     {
-        private List<Planets> planets;
 
         //private List<Stars> Stars;
 
         private Propreties propreties;
+        public IEnumerable<Planets> planets {get; set;}
+        public IEnumerable<Stars> stars {get; set;}
 
-        private IEnumerable<Planets> p;
-
-        //private IEnumerable<Stars> s;
-        public Search(List<Planets> planets, Propreties propreties)
+        //planetsrivate IEnumerable<Stars> s;
+        public Search(IEnumerable<Planets> planets, IEnumerable<Stars> stars, Propreties propreties)
         {
             this.planets = planets;
-            //this.Stars = Stars;
+            this.stars = stars;
             this.propreties = propreties;
 
             switch(propreties.Search)
             {
                 case "info":
-                    Planet_Star_Info();
+                    if (propreties.Type == "planet")
+                        Planet_Info();
+                    else
+                        Star_Info();
                     break;
                 case "search":
                     Planet_Star_search();
@@ -35,17 +37,17 @@ namespace LP2_Project1
             }
         }
 
-        private void Planet_Star_Info()
+        private void Planet_Info()
+        {
+            planets = planets.Where( pl => pl.pl_name == propreties.Name);      
+        }
+        private void Star_Info()
         {
             Console.WriteLine(propreties.Name);
-            p = planets.Where( pl => pl.pl_name == propreties.Name);  
-
-            Interface UI = new Interface(p, propreties.CVS);     
+            stars = stars.Where( pl => pl.st_name == propreties.Name);
         }
         private void Planet_Star_search()
         {
-            p = planets;
-
             PropertyInfo[] prop = typeof(Propreties).GetProperties();
 
             foreach (PropertyInfo pr in prop)
@@ -55,7 +57,7 @@ namespace LP2_Project1
                     switch(pr.Name)
                     {
                         case "DiscoveryMethod":
-                            p = p.Where( pl => pl.discoverymethod == 
+                            planets = planets.Where( pl => pl.discoverymethod == 
                                 propreties.DiscoveryMethod);
                             break;
                         case "DiscYear":
@@ -105,8 +107,6 @@ namespace LP2_Project1
                     FloatDrOrdering(propreties.DrOrder);
                 }
             }
-
-            Interface UI = new Interface(p, propreties.CVS);
             
         }
 
@@ -119,18 +119,17 @@ namespace LP2_Project1
 
         private void SearchFloats(string[] minmax, string value)
         {
-            PropertyInfo[] properties = typeof(Planets).GetProperties();
 
             if (ToNullableFloat(minmax[0]) != null)
             {
-                p = p.Where(pl => ToNullableFloat(Convert.
+                planets = planets.Where(pl => ToNullableFloat(Convert.
                 ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
                     >= ToNullableFloat(minmax[0]));
 
             }
             if (ToNullableFloat(minmax[1]) != null)
             {
-                p = p.Where(pl => ToNullableFloat(Convert.
+                planets = planets.Where(pl => ToNullableFloat(Convert.
                 ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
                     <= ToNullableFloat(minmax[1]));
             }
@@ -138,27 +137,27 @@ namespace LP2_Project1
 
         private void FloatCrOrdering(string order)
         {
-            p = p.OrderBy
+            planets = planets.OrderBy
                 (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
                 .GetProperty(order).GetValue(pl, null)))));
         }
 
         private void FloatDrOrdering(string order)
         {
-            p = p.OrderByDescending
+            planets = planets.OrderByDescending
                 (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
                 .GetProperty(order).GetValue(pl, null)))));
         }
 
         private void CrOrdering(string order)
         {
-            p = p.OrderBy
+            planets = planets.OrderBy
                 (pl => (pl.GetType().GetProperty(order).GetValue(pl, null)));
         }
 
         private void DrOrdering(string order)
         {
-            p = p.OrderByDescending
+            planets = planets.OrderByDescending
                 (pl => (pl.GetType().GetProperty(order).GetValue(pl, null)));
         }
     }

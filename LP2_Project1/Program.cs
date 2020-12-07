@@ -22,7 +22,8 @@ namespace LP2_Project1
         static void Main(string[] args)
         {
 
-            List<Planets> planets;
+            IEnumerable<Stars> stars;
+            IEnumerable<Planets> planets;
 
             // Takes the propreties from args so later on you can filter them
             Propreties propreties = Propreties.ReadArgs(args);
@@ -30,9 +31,15 @@ namespace LP2_Project1
             // Extract data from the file the user wants
             ReadFile file = new ReadFile(propreties.File);
 
-            planets = file.planets;
+            planets = file.p;
+            stars = file.s;
 
-            Search search = new Search(planets, propreties);
+            Search search = new Search(planets, stars, propreties);
+
+            planets = search.planets;
+            stars = search.stars;
+
+            Interface UI = new Interface(planets, stars, propreties);
 
             
             

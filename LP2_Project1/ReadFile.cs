@@ -11,14 +11,18 @@ namespace LP2_Project1
         private string filename;
         private bool firstLine = true;
 
-        public List<Planets> planets {get;}
+        public List<Planets> planets;
 
-        public IEnumerable<Stars> Star;
+        public List<Stars> stars;
+
+        public IEnumerable<Stars> s {get; set;}
+        public IEnumerable<Planets> p {get; set;}
 
         public ReadFile(string filename)
         {
             this.filename = filename;
             planets = new List<Planets>();
+            stars = new List<Stars>();
             File();
         }
         private void File()
@@ -98,37 +102,26 @@ namespace LP2_Project1
                     string[] colums = line.Split(',');
 
                     planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()], 
-                        hostname == null ? null : colums[hostname.GetValueOrDefault()],
+                        hostname == null ? null : colums[hostname.GetValueOrDefault()], 
                         discoverymethod == null ? null : colums[discoverymethod.GetValueOrDefault()], 
                         disc_year == null ? null : colums[disc_year.GetValueOrDefault()], 
                         pl_orbper == null ? null : colums[pl_orbper.GetValueOrDefault()], 
                         pl_rade == null ? null : colums[pl_rade.GetValueOrDefault()], 
                         pl_masse == null ? null : colums[pl_masse.GetValueOrDefault()], 
-                        pl_eqt == null ? null : colums[pl_eqt.GetValueOrDefault()]));
+                        pl_eqt == null ? null : colums[pl_eqt.GetValueOrDefault()])); 
 
-                    Star.Append(new Stars(hostname == null ? "null" : colums[hostname.GetValueOrDefault()], 
-                        st_teff == null ? "null" : colums[st_teff.GetValueOrDefault()],
-                        st_rad == null ? "null" : colums[st_rad.GetValueOrDefault()], 
-                        st_mass == null ? "null" : colums[st_mass.GetValueOrDefault()], 
-                        st_age == null ? "null" : colums[st_age.GetValueOrDefault()], 
-                        st_vsin == null ? "null" : colums[st_vsin.GetValueOrDefault()], 
-                        st_rotp == null ? "null" : colums[st_rotp.GetValueOrDefault()], 
-                        sy_dist == null ? "null" : colums[sy_dist.GetValueOrDefault()]));
+                    stars.Add(new Stars(hostname == null ? null : colums[hostname.GetValueOrDefault()], 
+                        st_teff == null ? null : colums[st_teff.GetValueOrDefault()],
+                        st_rad == null ? null : colums[st_rad.GetValueOrDefault()], 
+                        st_mass == null ? null : colums[st_mass.GetValueOrDefault()], 
+                        st_age == null ? null : colums[st_age.GetValueOrDefault()], 
+                        st_vsin == null ? null : colums[st_vsin.GetValueOrDefault()], 
+                        st_rotp == null ? null : colums[st_rotp.GetValueOrDefault()], 
+                        sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()]));
                 }
             }
-            //Star = Star.Distinct();
-
-            foreach(Stars s in Star)
-            {
-                Console.WriteLine(s.st_name);
-            }
-
-        }
-        private float? ToNullableFloat(string s)
-        {
-            float i;
-            if (float.TryParse(s, out i)) return i;
-            return null;
+            s = stars;
+            p = planets;
         }
 
     }

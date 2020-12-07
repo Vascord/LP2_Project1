@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace LP2_Project1
+namespace LP2_Project1 
 {
     public class Stars
     {
