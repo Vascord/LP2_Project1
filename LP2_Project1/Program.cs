@@ -23,7 +23,6 @@ namespace LP2_Project1
         {
 
             List<Planets> planets;
-            List<Stars> stars;
 
             // Takes the propreties from args so later on you can filter them
             Propreties propreties = Propreties.ReadArgs(args);
@@ -32,7 +31,6 @@ namespace LP2_Project1
             ReadFile file = new ReadFile(propreties.File);
 
             planets = file.planets;
-            stars = file.stars;
 
             Search search = new Search(planets, propreties);
 
