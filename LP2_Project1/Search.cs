@@ -95,8 +95,11 @@ namespace LP2_Project1
                         case "SyDist":
                             SearchFloats(propreties.SyDist, "sy_dist");
                             break;
-                        case "Age":
+                        case "StAge":
                             SearchFloats(propreties.StAge, "st_age");
+                            break;
+                        case "StPls":
+                            SearchFloats(propreties.StPls, "st_pls");
                             break;
                     }
                 }

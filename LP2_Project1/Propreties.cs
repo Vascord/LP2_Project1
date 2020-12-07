@@ -30,6 +30,7 @@ namespace LP2_Project1
         public string[] StRotp {get; private set;}
         public string[] SyDist {get; private set;}
         public string[] StAge {get; private set;}
+        public string[] StPls {get; private set;}
 
 
         private Propreties()
@@ -72,7 +73,7 @@ namespace LP2_Project1
         private Propreties(string file,string search,string type,string name, 
             string cvs, string crOrder, string drOrder, string[] teff,
             string[] rad,string[] mass, string[] vsin, string[] rotp,
-            string[] dist, string[] age)
+            string[] dist, string[] age, string[] pls)
         {
             this.File = file;
             this.Search = search;
@@ -88,6 +89,7 @@ namespace LP2_Project1
             this.StRotp = rotp;
             this.SyDist = dist;
             this.StAge = age;
+            this.StPls = pls;
         }
 
         public static Propreties ReadArgs(string[] args)
@@ -125,8 +127,7 @@ namespace LP2_Project1
                     return new Propreties();
 
                 default:
-                    Console.WriteLine(
-                    "You will need to specify which search you want to do.");
+                    UI = new Interface();
                     return new Propreties();
             }
 
@@ -160,7 +161,7 @@ namespace LP2_Project1
 
                 drOrder = CondString(drOrder, arg, "--dr_order", index, args);
 
-                hostName = CondString(hostName, arg, "--host_name", 
+                hostName = CondString(hostName, arg, "--hostname", 
                     index, args);
 
                 eqt = FloatMinMax(eqt, arg, "--eqt-min", "--eqt-max", 
@@ -193,7 +194,7 @@ namespace LP2_Project1
             drOrder = null ;
             string[] teff = new string [2], rad = new string [2], 
             mass = new string [2], vsin = new string [2], rotp = new string [2],
-            dist = new string [2], age = new string [2];
+            dist = new string [2], age = new string [2], pls = new string [2];
 
             foreach(string arg in args)
             {
@@ -230,11 +231,14 @@ namespace LP2_Project1
                 age = FloatMinMax(age, arg, "--age-min", 
                 "--age-max", index, args);
 
+                pls = FloatMinMax(pls, arg, "--pls-min", 
+                "--pls-max", index, args);
+
                 index++;
             }
 
             return new Propreties(file, search, type, name, cvs, crOrder, drOrder, 
-                teff,rad, mass, vsin, rotp, dist, age);
+                teff,rad, mass, vsin, rotp, dist, age, pls);
         }
 
         private static Propreties InfoOption(string[] args, string type, 
