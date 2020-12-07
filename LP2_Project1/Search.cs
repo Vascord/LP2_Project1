@@ -48,8 +48,6 @@ namespace LP2_Project1
 
             PropertyInfo[] prop = typeof(Propreties).GetProperties();
 
-            PropertyInfo[] pl_prop = typeof(Planets).GetProperties();
-
             foreach (PropertyInfo pr in prop)
             {
                 if (pr.GetValue(propreties) != null)
@@ -83,6 +81,15 @@ namespace LP2_Project1
                 }
             }
 
+            if(propreties.CrOrder != null)
+            {
+                CrOrdering(propreties.CrOrder);
+            }
+            else if(propreties.DrOrder != null)
+            {
+                DrOrdering(propreties.DrOrder);
+            }
+
             Interface UI = new Interface(p, propreties.CVS);
             
         }
@@ -111,6 +118,18 @@ namespace LP2_Project1
                 ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
                     <= ToNullableFloat(minmax[1]));
             }
+        }
+
+        private void CrOrdering(string order)
+        {
+            p = p.OrderBy
+                (pl => (pl.GetType().GetProperty(order).GetValue(pl, null)));
+        }
+
+        private void DrOrdering(string order)
+        {
+            p = p.OrderByDescending
+                (pl => (pl.GetType().GetProperty(order).GetValue(pl, null)));
         }
     }
 }
