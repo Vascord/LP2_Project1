@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections;
 namespace LP2_Project1
 {
     public class Planets
