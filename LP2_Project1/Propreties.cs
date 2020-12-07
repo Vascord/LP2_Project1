@@ -17,6 +17,7 @@ namespace LP2_Project1
         public string CVS {get; private set;}
         public string CrOrder {get; private set;}
         public string DrOrder {get; private set;}
+        public string HostName {get; private set;}
         public string[] DiscYear {get; private set;}
         public string[] PlOrbper {get; private set;}
         public string[] PlRade {get; private set;}
@@ -28,6 +29,8 @@ namespace LP2_Project1
         public string[] StVsin {get; private set;}
         public string[] StRotp {get; private set;}
         public string[] SyDist {get; private set;}
+        public string[] StAge {get; private set;}
+
 
         private Propreties()
         {
@@ -45,7 +48,7 @@ namespace LP2_Project1
         }
 
         private Propreties(string file, string search, string type, string name, 
-            string discMethod, string cvs, string crOrder, string drOrder,
+            string discMethod, string cvs, string crOrder, string drOrder, string host_name,
             string[] discYear, string[] eqt, string[] orbPer, string[] rade, 
             string[] masse)
         {
@@ -57,6 +60,7 @@ namespace LP2_Project1
             this.CVS = cvs;
             this.CrOrder = crOrder;
             this.DrOrder = drOrder;
+            this.HostName = host_name;
             this.DiscYear = discYear;
             this.PlEqt = eqt;
             this.PlOrbper = orbPer;
@@ -66,9 +70,9 @@ namespace LP2_Project1
         }
 
         private Propreties(string file,string search,string type,string name, 
-            string cvs, string crOrder, string drOrder,string[] teff,
+            string cvs, string crOrder, string drOrder, string[] teff,
             string[] rad,string[] mass, string[] vsin, string[] rotp,
-            string[] dist)
+            string[] dist, string[] age)
         {
             this.File = file;
             this.Search = search;
@@ -83,6 +87,7 @@ namespace LP2_Project1
             this.StVsin = vsin;
             this.StRotp = rotp;
             this.SyDist = dist;
+            this.StAge = age;
         }
 
         public static Propreties ReadArgs(string[] args)
@@ -133,7 +138,7 @@ namespace LP2_Project1
         {
             int index = 0;
             string file = null, name = null, discMethod = null, cvs = null, 
-            crOrder = null, drOrder = null;
+            crOrder = null, drOrder = null, hostName = null;
             string[] discYear = new string [2], eqt = new string [2], 
             orbPer = new string [2], rade = new string [2], 
             masse = new string [2];
@@ -155,6 +160,9 @@ namespace LP2_Project1
 
                 drOrder = CondString(drOrder, arg, "--dr_order", index, args);
 
+                hostName = CondString(hostName, arg, "--host_name", 
+                    index, args);
+
                 eqt = FloatMinMax(eqt, arg, "--eqt-min", "--eqt-max", 
                 index, args);
 
@@ -174,7 +182,7 @@ namespace LP2_Project1
             }
 
             return new Propreties(file, search, type, name, discMethod, cvs, 
-                crOrder, drOrder, discYear, eqt, orbPer, rade, masse);
+                crOrder, drOrder, hostName, discYear, eqt, orbPer, rade, masse);
         }
 
         private static Propreties SearchStarsOption(string[] args, string type,
@@ -185,7 +193,7 @@ namespace LP2_Project1
             drOrder = null ;
             string[] teff = new string [2], rad = new string [2], 
             mass = new string [2], vsin = new string [2], rotp = new string [2],
-            dist = new string [2];
+            dist = new string [2], age = new string [2];
 
             foreach(string arg in args)
             {
@@ -219,11 +227,14 @@ namespace LP2_Project1
                 dist = FloatMinMax(dist, arg, "--dist-min", 
                 "--dist-max", index, args);
 
+                age = FloatMinMax(age, arg, "--age-min", 
+                "--age-max", index, args);
+
                 index++;
             }
 
             return new Propreties(file, search, type, name, cvs, crOrder, drOrder, 
-                teff,rad, mass, vsin, rotp, dist);
+                teff,rad, mass, vsin, rotp, dist, age);
         }
 
         private static Propreties InfoOption(string[] args, string type, 

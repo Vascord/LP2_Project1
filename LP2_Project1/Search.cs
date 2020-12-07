@@ -58,6 +58,10 @@ namespace LP2_Project1
                             planets = planets.Where( pl => pl.discoverymethod == 
                                 propreties.DiscoveryMethod);
                             break;
+                        case "HostName":
+                            planets = planets.Where( pl => pl.hostname == 
+                                propreties.HostName);
+                            break;
                         case "DiscYear":
                             SearchFloats(propreties.DiscYear, "disc_year");
                             break;
@@ -91,6 +95,9 @@ namespace LP2_Project1
                         case "SyDist":
                             SearchFloats(propreties.SyDist, "sy_dist");
                             break;
+                        case "Age":
+                            SearchFloats(propreties.StAge, "st_age");
+                            break;
                     }
                 }
             }
@@ -98,7 +105,9 @@ namespace LP2_Project1
             if(propreties.CrOrder != null)
             {
                 if((propreties.CrOrder == "pl_name") || 
-                    (propreties.CrOrder == "discmethod"))
+                    (propreties.CrOrder == "hostname") ||
+                    (propreties.CrOrder == "discmethod") || 
+                    (propreties.CrOrder == "st_name"))
                 {
                     CrOrdering(propreties.CrOrder);
                 }
@@ -110,7 +119,9 @@ namespace LP2_Project1
             else if(propreties.DrOrder != null)
             {
                 if((propreties.DrOrder == "pl_name") || 
-                    (propreties.DrOrder == "discmethod"))
+                    (propreties.DrOrder == "hostname") || 
+                    (propreties.DrOrder == "discmethod") ||
+                    (propreties.DrOrder == "st_name"))
                 {
                     DrOrdering(propreties.DrOrder);
                 }
@@ -169,28 +180,62 @@ namespace LP2_Project1
 
         private void FloatCrOrdering(string order)
         {
-            planets = planets.OrderBy
-                (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
-                .GetProperty(order).GetValue(pl, null)))));
+            if(propreties.Type == "planet")
+            {
+                planets = planets.OrderBy
+                    (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
+                    .GetProperty(order).GetValue(pl, null)))));
+            }
+            else
+            {
+                stars = stars.OrderBy
+                    (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
+                    .GetProperty(order).GetValue(pl, null)))));
+            }
         }
 
         private void FloatDrOrdering(string order)
         {
-            planets = planets.OrderByDescending
-                (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
-                .GetProperty(order).GetValue(pl, null)))));
+            if(propreties.Type == "planet")
+            {
+                planets = planets.OrderByDescending
+                    (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
+                    .GetProperty(order).GetValue(pl, null)))));
+            }
+            else
+            {
+                stars = stars.OrderByDescending
+                    (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
+                    .GetProperty(order).GetValue(pl, null)))));
+            }
         }
 
         private void CrOrdering(string order)
         {
-            planets = planets.OrderBy
+            if(propreties.Type == "planet")
+            {
+                planets = planets.OrderBy
                 (pl => (pl.GetType().GetProperty(order).GetValue(pl, null)));
+            }
+            else
+            {
+                stars= stars.OrderBy
+                (pl => (pl.GetType().GetProperty(order).GetValue(pl, null)));
+            }
         }
 
         private void DrOrdering(string order)
         {
-            planets = planets.OrderByDescending
+            if(propreties.Type == "planet")
+            {
+                planets = planets.OrderByDescending
                 (pl => (pl.GetType().GetProperty(order).GetValue(pl, null)));
+            }
+            else
+            {
+                stars = stars.OrderByDescending
+                (pl => (pl.GetType().GetProperty(order).GetValue(pl, null)));
+            }
         }
     }
 }
