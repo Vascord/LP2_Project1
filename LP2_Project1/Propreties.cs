@@ -143,7 +143,7 @@ namespace LP2_Project1
             {
                 arg.ToLower();
                 
-                if(arg == "--cvs") cvs = "on";
+                if(arg == "--csv") cvs = "on";
 
                 file = CondString(file, arg, "--file", index, args);
 
@@ -192,7 +192,7 @@ namespace LP2_Project1
             {
                 arg.ToLower();
 
-                if(arg == "--cvs") cvs = "on";
+                if(arg == "--csv") cvs = "on";
 
                 file = CondString(file, arg, "--file", index, args);
 
@@ -237,7 +237,7 @@ namespace LP2_Project1
             {
                 arg.ToLower();
 
-                if(arg == "--cvs") cvs = "on";
+                if(arg == "--csv") cvs = "on";
 
                 file = CondString(file, arg, "--file", index, args);
 

@@ -83,11 +83,27 @@ namespace LP2_Project1
 
             if(propreties.CrOrder != null)
             {
-                CrOrdering(propreties.CrOrder);
+                if((propreties.CrOrder == "pl_name") || 
+                    (propreties.CrOrder == "discmethod"))
+                {
+                    CrOrdering(propreties.CrOrder);
+                }
+                else
+                {
+                    FloatCrOrdering(propreties.CrOrder);
+                }
             }
             else if(propreties.DrOrder != null)
             {
-                DrOrdering(propreties.DrOrder);
+                if((propreties.DrOrder == "pl_name") || 
+                    (propreties.DrOrder == "discmethod"))
+                {
+                    DrOrdering(propreties.DrOrder);
+                }
+                else
+                {
+                    FloatDrOrdering(propreties.DrOrder);
+                }
             }
 
             Interface UI = new Interface(p, propreties.CVS);
@@ -118,6 +134,20 @@ namespace LP2_Project1
                 ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
                     <= ToNullableFloat(minmax[1]));
             }
+        }
+
+        private void FloatCrOrdering(string order)
+        {
+            p = p.OrderBy
+                (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
+                .GetProperty(order).GetValue(pl, null)))));
+        }
+
+        private void FloatDrOrdering(string order)
+        {
+            p = p.OrderByDescending
+                (pl => (ToNullableFloat(Convert.ToString(pl.GetType()
+                .GetProperty(order).GetValue(pl, null)))));
         }
 
         private void CrOrdering(string order)
