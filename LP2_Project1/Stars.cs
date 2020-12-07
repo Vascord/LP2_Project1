@@ -9,14 +9,14 @@ namespace LP2_Project1
 {
     public class Stars
     {
-        public string st_name {get; }
-        public string st_teff {get; }
-        public string st_rad {get; }
-        public string st_mass {get; }
-        public string st_age {get; }
-        public string st_vsin {get; }
-        public string st_rotp {get; }
-        public string sy_dist {get; }
+        public string st_name {get; set;}
+        public string st_teff {get; set;}
+        public string st_rad {get; set;}
+        public string st_mass {get; set;}
+        public string st_age {get; set;}
+        public string st_vsin {get; set;}
+        public string st_rotp {get; set;}
+        public string sy_dist {get; set;}
 
         public Stars(string st_name, string st_teff, string st_rad, string st_mass,
             string st_age, string st_vsin, string st_rotp, string sy_dist)
@@ -32,31 +32,7 @@ namespace LP2_Project1
 
         }
 
-        /*
-        public bool Equals(Stars x, Stars y)
-        {
-
-            //Check whether the compared objects reference the same data.
-            if (Object.ReferenceEquals(x, y)) return true;
-
-            //Check whether any of the compared objects is null.
-            if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null))
-                return false;
-
-            //Check whether the products' properties are equal.
-            return x.st_name == y.st_name;
-        }
-
-        public int GetHashCode(Stars product)
-        {
-            //Check whether the object is null
-            if (Object.ReferenceEquals(product, null)) return 0;
-
-            //Get hash code for the Name field if it is not null.
-            int hashProductName = product.st_name == null ? 0 : product.st_name.GetHashCode();
-
-            //Calculate the hash code for the product.
-            return hashProductName;
-        }*/
+        
+        
     }
 }

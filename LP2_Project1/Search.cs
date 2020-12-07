@@ -63,21 +63,35 @@ namespace LP2_Project1
                         case "DiscYear":
                             SearchFloats(propreties.DiscYear, "disc_year");
                             break;
-
                         case "PlOrbper":
                             SearchFloats(propreties.PlOrbper, "pl_orbper");
                             break;
-
                         case "PlRade":
                             SearchFloats(propreties.PlRade, "pl_rade");
                             break;
-
                         case "PlMasse":
                             SearchFloats(propreties.PlMasse, "pl_masse");
                             break;
-
                         case "PlEqt":
                             SearchFloats(propreties.PlEqt, "pl_eqt");
+                            break;
+                        case "StTeff":
+                            SearchFloats(propreties.StTeff, "st_teff");
+                            break;
+                        case "StRad":
+                            SearchFloats(propreties.StRad, "st_rad");
+                            break;
+                        case "StMass":
+                            SearchFloats(propreties.StMass, "st_mass");
+                            break;
+                        case "StVsin":
+                            SearchFloats(propreties.StVsin, "st_vsin");
+                            break;
+                        case "StRotp":
+                            SearchFloats(propreties.StRotp, "st_rotp");
+                            break;
+                        case "SyDist":
+                            SearchFloats(propreties.SyDist, "sy_dist");
                             break;
                     }
                 }
@@ -119,20 +133,40 @@ namespace LP2_Project1
 
         private void SearchFloats(string[] minmax, string value)
         {
-
-            if (ToNullableFloat(minmax[0]) != null)
+            if(propreties.Type == "planet")
             {
-                planets = planets.Where(pl => ToNullableFloat(Convert.
-                ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
-                    >= ToNullableFloat(minmax[0]));
+                if (ToNullableFloat(minmax[0]) != null)
+                {
+                    planets = planets.Where(pl => ToNullableFloat(Convert.
+                    ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                        >= ToNullableFloat(minmax[0]));
 
+                }
+                if (ToNullableFloat(minmax[1]) != null)
+                {
+                    planets = planets.Where(pl => ToNullableFloat(Convert.
+                    ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                        <= ToNullableFloat(minmax[1]));
+                }
             }
-            if (ToNullableFloat(minmax[1]) != null)
+            else
             {
-                planets = planets.Where(pl => ToNullableFloat(Convert.
-                ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
-                    <= ToNullableFloat(minmax[1]));
+                if (ToNullableFloat(minmax[0]) != null)
+                {
+                    stars = stars.Where(pl => ToNullableFloat(Convert.
+                    ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                        >= ToNullableFloat(minmax[0]));
+
+                }
+                if (ToNullableFloat(minmax[1]) != null)
+                {
+                    stars = stars.Where(pl => ToNullableFloat(Convert.
+                    ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                        <= ToNullableFloat(minmax[1]));
+                }
             }
+
+            
         }
 
         private void FloatCrOrdering(string order)

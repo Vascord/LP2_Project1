@@ -16,6 +16,7 @@ namespace LP2_Project1
         public List<Stars> stars;
 
         public IEnumerable<Stars> s {get; set;}
+        public IEnumerable<Stars> s2 {get; set;}
         public IEnumerable<Planets> p {get; set;}
 
         public ReadFile(string filename)
@@ -32,7 +33,7 @@ namespace LP2_Project1
             string path  = Path.Combine(Environment.CurrentDirectory, filename);
             string[] lines = System.IO.File.ReadAllLines(path);
 
-            IEnumerable<string> lowerNames = lines.Select(l => l.ToLower().Trim());
+            IEnumerable<string> lowerNames = lines.Select(l => l.ToLower());
 
             foreach(string line in lowerNames)
             {
@@ -101,27 +102,57 @@ namespace LP2_Project1
                 {
                     string[] colums = line.Split(',');
 
-                    planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()], 
-                        hostname == null ? null : colums[hostname.GetValueOrDefault()], 
-                        discoverymethod == null ? null : colums[discoverymethod.GetValueOrDefault()], 
-                        disc_year == null ? null : colums[disc_year.GetValueOrDefault()], 
-                        pl_orbper == null ? null : colums[pl_orbper.GetValueOrDefault()], 
-                        pl_rade == null ? null : colums[pl_rade.GetValueOrDefault()], 
-                        pl_masse == null ? null : colums[pl_masse.GetValueOrDefault()], 
-                        pl_eqt == null ? null : colums[pl_eqt.GetValueOrDefault()])); 
+                    planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].Trim(), 
+                        hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
+                        discoverymethod == null ? null : colums[discoverymethod.GetValueOrDefault()].Trim(), 
+                        disc_year == null ? null : colums[disc_year.GetValueOrDefault()].Trim(), 
+                        pl_orbper == null ? null : colums[pl_orbper.GetValueOrDefault()].Trim(), 
+                        pl_rade == null ? null : colums[pl_rade.GetValueOrDefault()].Trim(), 
+                        pl_masse == null ? null : colums[pl_masse.GetValueOrDefault()].Trim(), 
+                        pl_eqt == null ? null : colums[pl_eqt.GetValueOrDefault()].Trim())); 
 
-                    stars.Add(new Stars(hostname == null ? null : colums[hostname.GetValueOrDefault()], 
-                        st_teff == null ? null : colums[st_teff.GetValueOrDefault()],
-                        st_rad == null ? null : colums[st_rad.GetValueOrDefault()], 
-                        st_mass == null ? null : colums[st_mass.GetValueOrDefault()], 
-                        st_age == null ? null : colums[st_age.GetValueOrDefault()], 
-                        st_vsin == null ? null : colums[st_vsin.GetValueOrDefault()], 
-                        st_rotp == null ? null : colums[st_rotp.GetValueOrDefault()], 
-                        sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()]));
+                    stars.Add(new Stars(hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
+                        st_teff == null ? null : colums[st_teff.GetValueOrDefault()].Trim(),
+                        st_rad == null ? null : colums[st_rad.GetValueOrDefault()].Trim(), 
+                        st_mass == null ? null : colums[st_mass.GetValueOrDefault()].Trim(), 
+                        st_age == null ? null : colums[st_age.GetValueOrDefault()].Trim(), 
+                        st_vsin == null ? null : colums[st_vsin.GetValueOrDefault()].Trim(), 
+                        st_rotp == null ? null : colums[st_rotp.GetValueOrDefault()].Trim(), 
+                        sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()].Trim()));
                 }
             }
             s = stars;
+            s2 = stars;
+
+            s = s.Distinct(new StarComparer());
+
+            foreach(Stars st in s)
+            {
+                foreach(Stars st2 in s2.Where(l => l.st_name == st.st_name))
+                {
+                    if (!String.IsNullOrEmpty(st2.st_teff))
+                        st.st_teff = st2.st_teff;
+                    if (!String.IsNullOrEmpty(st2.st_rad))
+                        st.st_rad = st2.st_rad;
+                    if (!String.IsNullOrEmpty(st2.st_mass))
+                        st.st_mass = st2.st_mass;
+                    if (!String.IsNullOrEmpty(st2.st_age))
+                        st.st_age = st2.st_age;
+                    if (!String.IsNullOrEmpty(st2.st_vsin))
+                        st.st_vsin = st2.st_vsin;
+                    if (!String.IsNullOrEmpty(st2.st_rotp))
+                        st.st_rotp = st2.st_rotp;
+                    if (!String.IsNullOrEmpty(st2.sy_dist))
+                        st.sy_dist = st2.sy_dist;
+                }
+            }
             p = planets;
+        }
+        private float? ToNullableFloat(string s)
+        {
+            float i;
+            if (float.TryParse(s, out i)) return i;
+            return null;
         }
 
     }
