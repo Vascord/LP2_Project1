@@ -136,7 +136,8 @@ namespace LP2_Project1
                         st_age == null ? null : colums[st_age.GetValueOrDefault()].Trim(), 
                         st_vsin == null ? null : colums[st_vsin.GetValueOrDefault()].Trim(), 
                         st_rotp == null ? null : colums[st_rotp.GetValueOrDefault()].Trim(), 
-                        sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()].Trim()));
+                        sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()].Trim(),
+                        null));
                 }
             }
 
@@ -185,6 +186,12 @@ namespace LP2_Project1
 
             foreach(Stars st in s)
             {
+                int count = 0;
+                foreach(Planets pl in p.Where(l => l.hostname == st.st_name))
+                {
+                    count++;
+                }
+                st.st_pls = Convert.ToString(count);
                 foreach(Stars st2 in s2.Where(l => l.st_name == st.st_name))
                 {
                     if (!String.IsNullOrEmpty(st2.st_teff))

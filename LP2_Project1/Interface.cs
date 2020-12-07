@@ -67,7 +67,7 @@ namespace LP2_Project1
             {
                 Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20} {8,-20}",
                 l.st_name, l.st_teff, l.st_rad, l.st_mass, l.st_age, l.st_vsin,
-                l.st_rotp, l.sy_dist, l.st_name/*l.st_pls*/);
+                l.st_rotp, l.sy_dist, l.st_pls);
             }
         }
 
