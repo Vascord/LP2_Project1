@@ -13,8 +13,8 @@ namespace LP2_Project1
         /// calls the class Propreties to know what type of searchthe user 
         /// wants.
         /// Then it extracts the file data with Read File and adds to the
-        /// Enums.
-        /// After that, it do the search depending of the enums and the
+        /// enumerables.
+        /// After that, it do the search depending of the enumerables and the
         /// propreties the user wants.
         /// In the end, it shows in a table the results of the search.
         /// </summary>
