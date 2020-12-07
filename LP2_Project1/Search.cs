@@ -54,13 +54,25 @@ namespace LP2_Project1
                 {
                     switch(pr.Name)
                     {
+                        case "Name":
+                            if(propreties.Type == "planet")
+                            {
+                                planets = planets.Where( 
+                                    pl => pl.pl_name.Contains(propreties.Name));
+                            }
+                            else
+                            {
+                                stars = stars.Where( pl => 
+                                    pl.st_name.Contains(propreties.Name));
+                            }
+                            break;
                         case "DiscoveryMethod":
-                            planets = planets.Where( pl => pl.discoverymethod == 
-                                propreties.DiscoveryMethod);
+                            planets = planets.Where( pl => pl.discoverymethod
+                                .Contains(propreties.DiscoveryMethod));
                             break;
                         case "HostName":
-                            planets = planets.Where( pl => pl.hostname == 
-                                propreties.HostName);
+                            planets = planets.Where( pl => 
+                                pl.hostname.Contains(propreties.HostName));
                             break;
                         case "DiscYear":
                             SearchFloats(propreties.DiscYear, "disc_year");
