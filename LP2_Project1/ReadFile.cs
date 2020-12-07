@@ -2,13 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Globalization;
 
 namespace LP2_Project1 
 {
     public class ReadFile
     {
         private string filename;
-        private bool firstLine = true;
+        private bool firstLine;
+        private bool columnError;
+        private bool minInfoError;
+        private bool incorrectTypeError;
 
         public List<Planets> planets;
 
@@ -23,12 +27,22 @@ namespace LP2_Project1
             this.filename = filename;
             planets = new List<Planets>();
             stars = new List<Stars>();
+
+            firstLine = true;
+            columnError = false;
+            minInfoError = false;
+            incorrectTypeError = false;
             File();
         }
         private void File()
         {
             int? pl_name = null, hostname = null, discoverymethod= null, disc_year= null, pl_orbper= null, pl_rade = null, pl_masse = null, pl_eqt= null,
                 st_teff = null, st_rad = null, st_mass= null, st_vsin = null, st_rotp = null, sy_dist= null, st_age=null;
+
+            int columnNr = 0;
+
+            
+
             string path  = Path.Combine(Environment.CurrentDirectory, filename);
             string[] lines = System.IO.File.ReadAllLines(path);
 
@@ -40,11 +54,12 @@ namespace LP2_Project1
                 else if (line[0] == '#'){}
                 else if (firstLine)
                 {
-                    string[] colums = line.Split(',');
-                    for (int i = 0; i < colums.Length; i++)
+                    string[] FirstLineColumns = line.Split(',');
+                    columnNr = FirstLineColumns.Length;
+                    for (int i = 0; i < FirstLineColumns.Length; i++)
                     {
                         
-                        switch(colums[i].Trim())
+                        switch(FirstLineColumns[i].Trim())
                         {
                             case "pl_name":
                                 pl_name = i;
@@ -91,8 +106,6 @@ namespace LP2_Project1
                             case "sy_dist":
                                 sy_dist = i;
                                 break;
-                            
-
                         }
                     }
                     firstLine = false;
@@ -101,6 +114,12 @@ namespace LP2_Project1
                 {
                     string[] colums = line.Split(',');
 
+                    if (colums.Length != columnNr)
+                        columnError = true;
+                    if(hostname == null && pl_name == null)
+                        minInfoError = true;
+
+                    
                     planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].Trim(), 
                         hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
                         discoverymethod == null ? null : colums[discoverymethod.GetValueOrDefault()].Trim(), 
@@ -120,7 +139,46 @@ namespace LP2_Project1
                         sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()].Trim()));
                 }
             }
+
+            foreach(Stars st in stars)
+            { 
+                float x;
+                if (String.IsNullOrEmpty(st.st_teff) == false && float.TryParse(st.st_teff, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(st.st_rad) == false && float.TryParse(st.st_rad, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(st.st_mass) == false && float.TryParse(st.st_mass, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(st.st_age) == false && float.TryParse(st.st_age, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(st.st_rotp) == false && float.TryParse(st.st_rotp, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(st.st_vsin) == false && float.TryParse(st.st_vsin, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(st.sy_dist) == false && float.TryParse(st.sy_dist, out x) == false)
+                    incorrectTypeError = true;
+            }
+
+            foreach(Planets pl in planets)
+            { 
+                float x;
+                if (String.IsNullOrEmpty(pl.disc_year) == false && float.TryParse(pl.disc_year, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(pl.pl_orbper) == false && float.TryParse(pl.pl_orbper, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(pl.pl_rade) == false && float.TryParse(pl.pl_rade, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(pl.pl_masse) == false && float.TryParse(pl.pl_masse, out x) == false)
+                    incorrectTypeError = true;
+                if (String.IsNullOrEmpty(pl.pl_eqt) == false && float.TryParse(pl.pl_eqt, out x) == false)
+                    incorrectTypeError = true;
+            }
+
+            if(columnError || minInfoError || incorrectTypeError)
+                FileErrorsOutput();
+            
             s = stars;
+            p = planets;
             s2 = stars;
 
             s = s.Distinct(new StarComparer());
@@ -144,15 +202,21 @@ namespace LP2_Project1
                     if (!String.IsNullOrEmpty(st2.sy_dist))
                         st.sy_dist = st2.sy_dist;
                 }
-            }
-            p = planets;
+            }            
         }
-        private float? ToNullableFloat(string s)
+        private void FileErrorsOutput()
         {
-            float i;
-            if (float.TryParse(s, out i)) return i;
-            return null;
-        }
+            Console.WriteLine("\nFile ({0}) has an error:", filename);
 
+            if(columnError)
+            Console.WriteLine("- Number of columns of a line" +
+                " does not correspond to the number of fields of the file");
+            if(minInfoError)
+                Console.WriteLine("- File does not have the minimum fields required");
+            if(incorrectTypeError)
+                Console.WriteLine("- File contains fields with incorrect types");
+            
+            Environment.Exit(0);
+        }
     }
 }
