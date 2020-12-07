@@ -35,8 +35,11 @@ namespace LP2_Project1
         {
             Console.WriteLine();
             Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20}", 
-                "Planet Name", "Star Name", "Disc. Method", "Year", "Orbital", "Radius"
+                "Planet Name", "Star Name", "Disc. Method", "Disc.Year", "Orbital", "Radius"
                 , "Mass", "Eq. Temp.");
+            Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20}", 
+                "", "", "", "", "Period (days)", "(vs Earth)"
+                , "(vs Earth)", "(Kelvin)");
             Console.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------");
             foreach(Planets l in planets)
             {
@@ -51,6 +54,9 @@ namespace LP2_Project1
             Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20}", 
                 "Star Name", "Star Temp.", "Radius", "Mass", "Age", "Rot. Vel."
                 , "Rot.  Pre.", "Distance");
+            Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20}", 
+                "", "Kelvins", "(vs Sun)", "(vs Sun)", "Giga-years", "km/s"
+                , "Period (days)", "Period (days)");
             Console.WriteLine("-------------------------------------------------------------------------------------------------------------------------------------");
             foreach(Stars l in stars)
             {
