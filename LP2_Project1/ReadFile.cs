@@ -114,10 +114,26 @@ namespace LP2_Project1
                 {
                     string[] colums = line.Split(',');
 
+                    string[] nr = {colums[st_teff.GetValueOrDefault()].Trim(), colums[st_rad.GetValueOrDefault()].Trim(), 
+                        colums[st_mass.GetValueOrDefault()].Trim(), colums[st_age.GetValueOrDefault()].Trim(), 
+                        colums[st_vsin.GetValueOrDefault()].Trim(), colums[st_rotp.GetValueOrDefault()].Trim(),
+                        colums[sy_dist.GetValueOrDefault()].Trim(), colums[disc_year.GetValueOrDefault()].Trim(),
+                        colums[pl_orbper.GetValueOrDefault()].Trim(), colums[pl_rade.GetValueOrDefault()].Trim(),
+                        colums[pl_masse.GetValueOrDefault()].Trim(), colums[pl_eqt.GetValueOrDefault()].Trim()};
+
                     if (colums.Length != columnNr)
                         columnError = true;
                     if(hostname == null && pl_name == null)
                         minInfoError = true;
+                    
+                    float x;
+                    
+                    foreach(string s in nr)
+                    {
+                        if (String.IsNullOrEmpty(s) == false && 
+                            float.TryParse(s, out x) == false)
+                            incorrectTypeError = true;
+                    }
 
                     
                     planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].Trim(), 
@@ -140,41 +156,7 @@ namespace LP2_Project1
                         null));
                 }
             }
-
-            foreach(Stars st in stars)
-            { 
-                float x;
-                if (String.IsNullOrEmpty(st.st_teff) == false && float.TryParse(st.st_teff, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(st.st_rad) == false && float.TryParse(st.st_rad, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(st.st_mass) == false && float.TryParse(st.st_mass, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(st.st_age) == false && float.TryParse(st.st_age, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(st.st_rotp) == false && float.TryParse(st.st_rotp, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(st.st_vsin) == false && float.TryParse(st.st_vsin, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(st.sy_dist) == false && float.TryParse(st.sy_dist, out x) == false)
-                    incorrectTypeError = true;
-            }
-
-            foreach(Planets pl in planets)
-            { 
-                float x;
-                if (String.IsNullOrEmpty(pl.disc_year) == false && float.TryParse(pl.disc_year, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(pl.pl_orbper) == false && float.TryParse(pl.pl_orbper, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(pl.pl_rade) == false && float.TryParse(pl.pl_rade, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(pl.pl_masse) == false && float.TryParse(pl.pl_masse, out x) == false)
-                    incorrectTypeError = true;
-                if (String.IsNullOrEmpty(pl.pl_eqt) == false && float.TryParse(pl.pl_eqt, out x) == false)
-                    incorrectTypeError = true;
-            }
-
+            Console.WriteLine("CHEGOUUUUU");
             if(columnError || minInfoError || incorrectTypeError)
                 FileErrorsOutput();
             
@@ -184,6 +166,7 @@ namespace LP2_Project1
 
             s = s.Distinct(new StarComparer());
 
+            
             foreach(Stars st in s)
             {
                 int count = 0;
