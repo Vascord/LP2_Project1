@@ -40,11 +40,23 @@ namespace LP2_Project1
                 st_teff = null, st_rad = null, st_mass= null, st_vsin = null, st_rotp = null, sy_dist= null, st_age=null;
 
             int columnNr = 0;
+            string[] FirstLineColumns;
+            string[] colums;
+            string[] nr;
+            float temp;
+            string[] lines = null;
 
-            
-
-            string path  = Path.Combine(Environment.CurrentDirectory, filename);
-            string[] lines = System.IO.File.ReadAllLines(path);
+            string path = path  = Path.Combine(Environment.CurrentDirectory, filename);
+            try
+            {                
+                lines = System.IO.File.ReadAllLines(path);
+            }
+            catch(FileNotFoundException)
+            {
+                Console.WriteLine("\nFile Not Found:");
+                Console.WriteLine(path);
+                Environment.Exit(0);
+            }
 
             IEnumerable<string> lowerNames = lines.Select(l => l.ToLower());
 
@@ -54,11 +66,11 @@ namespace LP2_Project1
                 else if (line[0] == '#'){}
                 else if (firstLine)
                 {
-                    string[] FirstLineColumns = line.Split(',');
+                    FirstLineColumns = line.Split(',');
                     columnNr = FirstLineColumns.Length;
                     for (int i = 0; i < FirstLineColumns.Length; i++)
                     {
-                        
+                        //Detects the positions of the fields
                         switch(FirstLineColumns[i].Trim())
                         {
                             case "pl_name":
@@ -112,64 +124,70 @@ namespace LP2_Project1
                 }
                 else
                 {
-                    string[] colums = line.Split(',');
+                    colums = line.Split(',');
 
-                    string[] nr = {colums[st_teff.GetValueOrDefault()].Trim(), colums[st_rad.GetValueOrDefault()].Trim(), 
-                        colums[st_mass.GetValueOrDefault()].Trim(), colums[st_age.GetValueOrDefault()].Trim(), 
-                        colums[st_vsin.GetValueOrDefault()].Trim(), colums[st_rotp.GetValueOrDefault()].Trim(),
-                        colums[sy_dist.GetValueOrDefault()].Trim(), colums[disc_year.GetValueOrDefault()].Trim(),
-                        colums[pl_orbper.GetValueOrDefault()].Trim(), colums[pl_rade.GetValueOrDefault()].Trim(),
-                        colums[pl_masse.GetValueOrDefault()].Trim(), colums[pl_eqt.GetValueOrDefault()].Trim()};
-
-                    if (colums.Length != columnNr)
-                        columnError = true;
-                    if(hostname == null && pl_name == null)
-                        minInfoError = true;
-                    
-                    float x;
-                    
-                    foreach(string s in nr)
-                    {
-                        if (String.IsNullOrEmpty(s) == false && 
-                            float.TryParse(s, out x) == false)
-                            incorrectTypeError = true;
-                    }
-
-                    
-                    planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].Trim(), 
-                        hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
-                        discoverymethod == null ? null : colums[discoverymethod.GetValueOrDefault()].Trim(), 
-                        disc_year == null ? null : colums[disc_year.GetValueOrDefault()].Trim(), 
-                        pl_orbper == null ? null : colums[pl_orbper.GetValueOrDefault()].Trim(), 
-                        pl_rade == null ? null : colums[pl_rade.GetValueOrDefault()].Trim(), 
-                        pl_masse == null ? null : colums[pl_masse.GetValueOrDefault()].Trim(), 
-                        pl_eqt == null ? null : colums[pl_eqt.GetValueOrDefault()].Trim())); 
-
-                    stars.Add(new Stars(hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
-                        st_teff == null ? null : colums[st_teff.GetValueOrDefault()].Trim(),
+                    //Used for verification of fille possible errors and to fill planets.cs and stars.cs
+                    nr = new string[] {st_teff == null ? null : colums[st_teff.GetValueOrDefault()].Trim(), 
                         st_rad == null ? null : colums[st_rad.GetValueOrDefault()].Trim(), 
                         st_mass == null ? null : colums[st_mass.GetValueOrDefault()].Trim(), 
                         st_age == null ? null : colums[st_age.GetValueOrDefault()].Trim(), 
                         st_vsin == null ? null : colums[st_vsin.GetValueOrDefault()].Trim(), 
-                        st_rotp == null ? null : colums[st_rotp.GetValueOrDefault()].Trim(), 
-                        sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()].Trim(),
-                        null));
+                        st_rotp == null ? null : colums[st_rotp.GetValueOrDefault()].Trim(),
+                        sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()].Trim(), 
+                        disc_year == null ? null : colums[disc_year.GetValueOrDefault()].Trim(),
+                        pl_orbper == null ? null : colums[pl_orbper.GetValueOrDefault()].Trim(), 
+                        pl_rade == null ? null : colums[pl_rade.GetValueOrDefault()].Trim(),
+                        pl_masse == null ? null : colums[pl_masse.GetValueOrDefault()].Trim(), 
+                        pl_eqt == null ? null : colums[pl_eqt.GetValueOrDefault()].Trim()};
+
+                    //Verification of fille possible errors
+                    if (colums.Length != columnNr)
+                        columnError = true;
+                    if(hostname == null && pl_name == null)
+                        minInfoError = true;
+                    foreach(string s in nr)
+                    {
+                        if (String.IsNullOrEmpty(s) == false && 
+                            float.TryParse(s, out temp) == false)
+                            incorrectTypeError = true;
+                        if(String.IsNullOrEmpty(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].Trim()))
+                            minInfoError = true;
+                        if(String.IsNullOrEmpty(hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim()))
+                            minInfoError = true;
+                    }
+
+                    //planets list completion
+                    planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].Trim(), 
+                        hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
+                        discoverymethod == null ? null : colums[discoverymethod.GetValueOrDefault()].Trim(), 
+                        nr[7], nr[8], nr[9], nr[10], nr[11])); 
+
+                    //stars list completion
+                    stars.Add(new Stars(hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
+                        nr[0], nr[1], nr[2], nr[3], nr[4], nr[5], nr[6], null));
                 }
             }
-            Console.WriteLine("CHEGOUUUUU");
-            if(columnError || minInfoError || incorrectTypeError)
-                FileErrorsOutput();
-            
+            // If there is a error in the file calls FilleErrorsOutput()
+            if(columnError || minInfoError || incorrectTypeError) FileErrorsOutput();
+
+            FillIEnumerables();           
+        }
+
+        private void FillIEnumerables()
+        {
+            //Assigns the correct lists to the IEnumerables
             s = stars;
             p = planets;
             s2 = stars;
 
+            // Removes duplicates from s
             s = s.Distinct(new StarComparer());
 
-            
+            //Gathers iformation from duplicate stars in s2 and fills in stars in s with extra information
             foreach(Stars st in s)
             {
                 int count = 0;
+                // Counts the number of planets that orbit the star
                 foreach(Planets pl in p.Where(l => l.hostname == st.st_name))
                 {
                     count++;
@@ -192,7 +210,7 @@ namespace LP2_Project1
                     if (!String.IsNullOrEmpty(st2.sy_dist))
                         st.sy_dist = st2.sy_dist;
                 }
-            }            
+            } 
         }
         private void FileErrorsOutput()
         {
