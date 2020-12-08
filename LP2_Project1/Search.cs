@@ -170,6 +170,7 @@ namespace LP2_Project1
                     join p in planets on s.st_name equals p.hostname
                     select s;
             }
+            
             // Sees if the user wants the increasing order
             if(propreties.CrOrder != null)
             {

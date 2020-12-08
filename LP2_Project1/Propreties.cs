@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 namespace LP2_Project1
 {
@@ -174,60 +175,23 @@ namespace LP2_Project1
 
         /// <summary>
         /// Private constructor for the propreties for search type search for
-        /// planets
+        /// stars and planets
         /// </summary>
         /// <param name="file">Name of the file</param>
         /// <param name="search">Type of search</param>
         /// <param name="type">Search for planet or star</param>
+        /// <param name="hostname">Name of the star</param>
         /// <param name="name">Name of the planet</param>
         /// <param name="discMethod">Name of disc. method of the planet</param>
         /// <param name="csv">To know if csv is on or not</param>
         /// <param name="crOrder">To know if there's increasing order</param>
         /// <param name="drOrder">To know if there's decreasing order</param>
-        /// <param name="hostname">Name of the star of the planet</param>
         /// <param name="discYear">Discovery year of the planet</param>
         /// <param name="eqt">Equilibrium temperature of the planet</param>
         /// <param name="orbPer">Orbitational period of the planet</param>
         /// <param name="rade">Radius of the planet</param>
         /// <param name="masse">Mass of the planet</param>
-        /// <return> The propreties to create a search of the planets </return>
-        private Propreties(string file, string search, string type, string name, 
-            string discMethod, string cvs, string crOrder, string drOrder, string host_name,
-            string[] discYear, string[] eqt, string[] orbPer, string[] rade, 
-            string[] masse)
-        {
-            // Variables for propreties
-            this.File = file;
-            this.Search = search;
-            this.Type = type;
-            this.Name = name;
-            this.DiscoveryMethod = discMethod;
-            this.CVS = cvs;
-            this.CrOrder = crOrder;
-            this.DrOrder = drOrder;
-            this.HostName = host_name;
-            this.DiscYear = discYear;
-            this.PlEqt = eqt;
-            this.PlOrbper = orbPer;
-            this.PlRade = rade;
-            this.PlMasse = masse;
-            
-        }
-
-        /// <summary>
-        /// Private constructor for the propreties for search type search for
-        /// stars
-        /// </summary>
-        /// <param name="file">Name of the file</param>
-        /// <param name="search">Type of search</param>
-        /// <param name="type">Search for planet or star</param>
-        /// <param name="name">Name of the star</param>
-        /// <param name="csv">To know if csv is on or not</param>
-        /// <param name="crOrder">To know if there's increasing order</param>
-        /// <param name="drOrder">To know if there's decreasing order</param>
-        /// <param name="teff">Name of the star of the planet</param>
-        /// <param name="discYear">Discovery year of the planet</param>
-        /// <param name="eqt">Effective temperature of the star</param>
+        /// <param name="teff">Effective temperature of the star</param>
         /// <param name="rad">Radius of the star</param>
         /// <param name="mass">Mass of the star</param>
         /// <param name="vsin">Speed of rotation of the star</param>
@@ -235,34 +199,10 @@ namespace LP2_Project1
         /// <param name="dist">Distance between the star and the Sun</param>
         /// <param name="age">Age of the star</param>
         /// <param name="pls">Planets of the star</param>
-        /// <return> The propreties to create a search of the stars </return>
-        private Propreties(string file,string search,string type,string name, 
-            string cvs, string crOrder, string drOrder, string[] teff,
-            string[] rad,string[] mass, string[] vsin, string[] rotp,
-            string[] dist, string[] age, string[] pls)
-        {
-            // Variables for propreties
-            this.File = file;
-            this.Search = search;
-            this.Type = type;
-            this.Name = name;
-            this.CVS = cvs;
-            this.CrOrder = crOrder;
-            this.DrOrder = drOrder;
-            this.StTeff = teff;
-            this.StRad = rad;
-            this.StMass = mass;
-            this.StVsin = vsin;
-            this.StRotp = rotp;
-            this.SyDist = dist;
-            this.StAge = age;
-            this.StPls = pls;
-        }
-
-        // Test forma avançada
+        /// <return> The propreties to create a search of the planets </return>
         private Propreties(string file, string search, string type, string name, 
-            string discMethod, string cvs, string crOrder, string drOrder, 
-            string host_name,string[] discYear, string[] eqt, string[] orbPer, 
+            string host_name, string discMethod, string cvs, string crOrder, 
+            string drOrder,string[] discYear, string[] eqt, string[] orbPer, 
             string[] rade, string[] masse, string[] teff,string[] rad,
             string[] mass, string[] vsin, string[] rotp,string[] dist, 
             string[] age, string[] pls)
@@ -343,7 +283,7 @@ namespace LP2_Project1
                 //Shows the possible commands of the search since the user
                 // failed
                 default:
-                    UI = new Interface();
+                    Console.WriteLine("This option does not exist, consult the command by typing -- help");
                     return new Propreties();
             }
 
@@ -355,9 +295,9 @@ namespace LP2_Project1
         /// search 
         /// </summary>
         /// <param name="args">Arguments of the user</param>
-        /// <param name="type">Planet type search</param>
+        /// <param name="type">Planet or star type search</param>
         /// <param name="search">Search type</param>
-        /// <return> The propreties for the planets search </return>
+        /// <return> The propreties for the planets or stars search </return>
         private static Propreties SearchOption(string[] args,string type,
             string search)
         {
@@ -381,198 +321,89 @@ namespace LP2_Project1
                 
                 if(arg == "--csv") cvs = "on";
 
-                file = CondString(file, arg, "--file", index, args);
+                else if(arg == "--file") file = 
+                    CondString(file, arg, "--file", index, args);
 
-                name = CondString(name, arg, "--pl_name", index, args);
+                else if(arg == "--pl_name") name = 
+                    CondString(name, arg, "--pl_name", index, args);
 
-                discMethod = CondString(discMethod, arg, "--discmethod", index, 
-                args);
+                else if(arg == "--discmethod") discMethod = 
+                    CondString(discMethod, arg, "--discmethod", index, args);
 
-                crOrder = CondString(crOrder, arg, "--cr_order", index, args);
+                else if(arg == "--cr_order") crOrder = 
+                    CondString(crOrder, arg, "--cr_order", index, args);
 
-                drOrder = CondString(drOrder, arg, "--dr_order", index, args);
+                else if(arg == "--dr_order") drOrder = 
+                    CondString(drOrder, arg, "--dr_order", index, args);
 
-                hostName = CondString(hostName, arg, "--hostname", 
-                    index, args);
+                else if(arg == "--hostname") hostName = 
+                    CondString(hostName, arg, "--hostname", index, args);
 
-                eqt = FloatMinMax(eqt, arg, "--eqt-min", "--eqt-max", 
-                index, args);
+                else if((arg == "--eqt-min") || (arg == "--eqt-max")) eqt = 
+                    FloatMinMax(eqt, arg, "--eqt-min", "--eqt-max", index, 
+                    args);
 
-                masse = FloatMinMax(masse, arg, "--masse-min", "--masse-max", 
-                index, args);
+                else if((arg == "--masse-min") || (arg == "--masse-max"))masse = 
+                    FloatMinMax(masse, arg, "--masse-min", "--masse-max", index, 
+                    args);
 
-                rade = FloatMinMax(rade, arg, "--rade-min", "--rade-max", 
-                index, args);
+                else if((arg == "--rade-min") || (arg == "--rade-max")) rade = 
+                    FloatMinMax(rade, arg, "--rade-min", "--rade-max", index, 
+                    args);
 
-                orbPer = FloatMinMax(orbPer, arg, "--orbper-min", "--orbper-max"
-                , index, args);
+                else if((arg == "--orbper-min") || (arg == "--orbper-max")) 
+                    orbPer = FloatMinMax(orbPer, arg, "--orbper-min", 
+                    "--orbper-max", index, args);
 
-                discYear = FloatMinMax(discYear, arg, "--discyear-min", 
-                "--discyear-max", index, args);
+                else if((arg == "--discyear-min") || (arg == "--discyear-max")) 
+                    discYear = FloatMinMax(discYear, arg, "--discyear-min", 
+                    "--discyear-max", index, args);
 
-                teff = FloatMinMax(teff, arg, "--teff-min", "--teff-max", 
-                index, args);
+                else if((arg == "--teff-min") || (arg == "--teff-max")) teff = 
+                    FloatMinMax(teff, arg, "--teff-min", "--teff-max", index, 
+                    args);
 
-                rad = FloatMinMax(rad, arg, "--rad-min", "--rad-max", 
-                index, args);
+                else if((arg == "--rad-min") || (arg == "--rad-max")) rad = 
+                    FloatMinMax(rad, arg, "--rad-min", "--rad-max", index, 
+                    args);
 
-                mass = FloatMinMax(mass, arg, "--mass-min", "--mass-max", 
-                index, args);
+                else if((arg == "--mass-min") || (arg == "--mass-max")) mass = 
+                    FloatMinMax(mass, arg, "--mass-min", "--mass-max", index, 
+                    args);
 
-                vsin = FloatMinMax(vsin, arg, "--vsin-min", "--vsin-max", 
-                index, args);
+                else if((arg == "--vsin-min") || (arg == "--vsin-max")) vsin = 
+                    FloatMinMax(vsin, arg, "--vsin-min", "--vsin-max", index, 
+                    args);
 
-                rotp = FloatMinMax(rotp, arg, "--rotp-min", 
-                "--rotp-max", index, args);
+                else if((arg == "--rotp-min") || (arg == "--rotp-max")) rotp = 
+                    FloatMinMax(rotp, arg, "--rotp-min", "--rotp-max", index, 
+                    args);
 
-                dist = FloatMinMax(dist, arg, "--dist-min", 
-                "--dist-max", index, args);
+                else if((arg == "--dist-min") || (arg == "--dist-max")) dist = 
+                    FloatMinMax(dist, arg, "--dist-min", "--dist-max", index, 
+                    args);
 
-                age = FloatMinMax(age, arg, "--age-min", 
-                "--age-max", index, args);
+                else if((arg == "--age-min") || (arg == "--age-max")) age = 
+                    FloatMinMax(age, arg, "--age-min", 
+                    "--age-max", index, args);
 
-                pls = FloatMinMax(pls, arg, "--pls-min", 
-                "--pls-max", index, args);
+                else if((arg == "--pls-max") || (arg == "--pls-min")) pls = 
+                    FloatMinMax(pls, arg, "--pls-min", "--pls-max", index, 
+                    args);
 
-                index++;
-            }
-
-            return new Propreties(file, search, type, name, discMethod, cvs, 
-                crOrder, drOrder, hostName, discYear, eqt, orbPer, rade, masse,
-                teff,rad, mass, vsin, rotp, dist, age, pls);
-        }
-
-        /// <summary>
-        /// Private static method to read the propreties the user wants for
-        /// search of the planets
-        /// </summary>
-        /// <param name="args">Arguments of the user</param>
-        /// <param name="type">Planet type search</param>
-        /// <param name="search">Search type</param>
-        /// <return> The propreties for the planets search </return>
-        private static Propreties SearchPlanetsOption(string[] args,string type,
-            string search)
-        {
-            // Variables of the propreties for this search
-            int index = 0;
-            string file = null, name = null, discMethod = null, cvs = null, 
-            crOrder = null, drOrder = null, hostName = null;
-            string[] discYear = new string [2], eqt = new string [2], 
-            orbPer = new string [2], rade = new string [2], 
-            masse = new string [2];
-
-            // Reads which argument of the user to know what he wants to search
-            // If one is correct, then he will be add to the propreties, the
-            // others stay null and will not affect the search
-            foreach(string arg in args)
-            {
-                arg.ToLower();
+                else if(arg.Contains("--")) {
+                    Console.WriteLine("There's must be a problem with one of yours arguments.");
+                    Console.WriteLine("Please try again (use -- help to know all of them if needed).");
+                    Environment.Exit(0);
+                }
                 
-                if(arg == "--csv") cvs = "on";
-
-                file = CondString(file, arg, "--file", index, args);
-
-                name = CondString(name, arg, "--pl_name", index, args);
-
-                discMethod = CondString(discMethod, arg, "--discmethod", index, 
-                args);
-
-                crOrder = CondString(crOrder, arg, "--cr_order", index, args);
-
-                drOrder = CondString(drOrder, arg, "--dr_order", index, args);
-
-                hostName = CondString(hostName, arg, "--hostname", 
-                    index, args);
-
-                eqt = FloatMinMax(eqt, arg, "--eqt-min", "--eqt-max", 
-                index, args);
-
-                masse = FloatMinMax(masse, arg, "--masse-min", "--masse-max", 
-                index, args);
-
-                rade = FloatMinMax(rade, arg, "--rade-min", "--rade-max", 
-                index, args);
-
-                orbPer = FloatMinMax(orbPer, arg, "--orbper-min", "--orbper-max"
-                , index, args);
-
-                discYear = FloatMinMax(discYear, arg, "--discyear-min", 
-                "--discyear-max", index, args);
-
                 index++;
             }
 
-            return new Propreties(file, search, type, name, discMethod, cvs, 
-                crOrder, drOrder, hostName, discYear, eqt, orbPer, rade, masse);
-        }
-
-        /// <summary>
-        /// Private static method to read the propreties the user wants for
-        /// search of the stars
-        /// </summary>
-        /// <param name="args">Arguments of the user</param>
-        /// <param name="type">Star type search</param>
-        /// <param name="search">Search type</param>
-        /// <return> The propreties for the stars search </return>
-        private static Propreties SearchStarsOption(string[] args, string type,
-            string search)
-        {
-            // Variables of the propreties for this search
-            int index = 0;
-            string file = null, name = null, cvs = null, crOrder = null, 
-            drOrder = null ;
-            string[] teff = new string [2], rad = new string [2], 
-            mass = new string [2], vsin = new string [2], rotp = new string [2],
-            dist = new string [2], age = new string [2], pls = new string [2];
-
-            // Reads which argument of the user to know what he wants to search
-            // If one is correct, then he will be add to the propreties, the
-            // others stay null and will not affect the search
-            foreach(string arg in args)
-            {
-                arg.ToLower();
-
-                if(arg == "--csv") cvs = "on";
-
-                file = CondString(file, arg, "--file", index, args);
-
-                name = CondString(name, arg, "--st_name", index, args);
-
-                crOrder = CondString(crOrder, arg, "--cr_order", index, args);
-
-                drOrder = CondString(drOrder, arg, "--dr_order", index, args);
-
-                teff = FloatMinMax(teff, arg, "--teff-min", "--teff-max", 
-                index, args);
-
-                rad = FloatMinMax(rad, arg, "--rad-min", "--rad-max", 
-                index, args);
-
-                mass = FloatMinMax(mass, arg, "--mass-min", "--mass-max", 
-                index, args);
-
-                vsin = FloatMinMax(vsin, arg, "--vsin-min", "--vsin-max", 
-                index, args);
-
-                rotp = FloatMinMax(rotp, arg, "--rotp-min", 
-                "--rotp-max", index, args);
-
-                dist = FloatMinMax(dist, arg, "--dist-min", 
-                "--dist-max", index, args);
-
-                age = FloatMinMax(age, arg, "--age-min", 
-                "--age-max", index, args);
-
-                pls = FloatMinMax(pls, arg, "--pls-min", 
-                "--pls-max", index, args);
-
-                index++;
-            }
-
-            return new Propreties(file, search, type, name, cvs, crOrder, drOrder, 
+            return new Propreties(file, search, type, name,hostName, discMethod, 
+                cvs, crOrder, drOrder, discYear, eqt, orbPer, rade, masse,
                 teff,rad, mass, vsin, rotp, dist, age, pls);
         }
-
         
         /// <summary>
         /// Private static method to read the propreties for the specific star
@@ -628,28 +459,20 @@ namespace LP2_Project1
         private static string[] FloatMinMax(string[] cond, string arg, 
             string name1, string name2, int index, string[] args)
         {
-            // Sees if the argument has the right names
-            if((arg == name1) || (arg == name2))
+            // For min value
+            if(arg == name1)
             {
-                // For min value
-                if(arg == name1)
-                {
-                    // Gives string to the specific property
-                    cond[0] = args[++index].ToLower();
-                    --index;
-                    return cond;
+                // Gives string to the specific property
+                cond[0] = args[++index].ToLower();
+                --index;
+            }
 
-                }
-
-                // For max value
-                else if(arg == name2)
-                {
-                    // Gives string to the specific property
-                    cond[1] = args[++index].ToLower();
-                    --index;
-                    return cond;
-                    
-                }
+            // For max value
+            else if(arg == name2)
+            {
+                // Gives string to the specific property
+                cond[1] = args[++index].ToLower();
+                --index;       
             }
 
             return cond;
@@ -669,13 +492,10 @@ namespace LP2_Project1
         private static string CondString(string cond, string arg, 
             string name, int index, string[] args)
         {
-            // Sees if the argument has the right name
-            if(arg == name)
-            {
-                // Gives string to the specific property
-                cond = args[++index].ToLower();
-                --index;
-            }
+            
+            // Gives string to the specific property
+            cond = args[++index].ToLower();
+            --index;
 
             return cond;
         }
