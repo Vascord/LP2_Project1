@@ -15,8 +15,6 @@ namespace LP2_Project1
             this.stars = stars;
             this.propreties = propreties;
 
-            Console.WriteLine(propreties.CVS);
-
             if(propreties.CVS == "on")
                 if (propreties.Type == "planet")
                     PlanetCVSInterface();
@@ -78,20 +76,20 @@ namespace LP2_Project1
             foreach(Planets l in planets)
             {
                 Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7}",
-                l.pl_name, l.hostname, l.discoverymethod, l.disc_year, l.pl_orbper, l.pl_rade,
-                l.pl_masse, l.pl_eqt);
+                l.pl_name, l.hostname, l.discoverymethod, l.disc_year, 
+                l.pl_orbper, l.pl_rade, l.pl_masse, l.pl_eqt);
             }
         }
 
         private void StarCVSInterface()
         {
             Console.WriteLine();
-            Console.WriteLine("st_name,st_teff,st_rad,st_mass,st_age,st_vsin,st_rotp,sy_dist");
+            Console.WriteLine("st_name,st_teff,st_rad,st_mass,st_age,st_vsin,st_rotp,sy_dist,st_pls");
             foreach(Stars l in stars)
             {
-                Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7}",
+                Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
                 l.st_name, l.st_teff, l.st_rad, l.st_mass, l.st_age, l.st_vsin,
-                l.st_rotp, l.sy_dist);
+                l.st_rotp, l.sy_dist, l.st_pls);
             }
         }
 
