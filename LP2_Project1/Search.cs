@@ -357,6 +357,12 @@ namespace LP2_Project1
         {
             float i;
             if (float.TryParse(s, out i)) return i;
+            if (s == "") return null;
+            if (s == null) return null;
+            Console.WriteLine("There must be an error in a value for a argument that requires a float.");
+            Console.WriteLine("Please, try again with a correct value (consult -- help for help).");
+            Console.WriteLine("The incorrect value : {0}", s);
+            Environment.Exit(0);
             return null;
         }
     }
