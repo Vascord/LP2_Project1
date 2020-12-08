@@ -165,10 +165,10 @@ namespace LP2_Project1
             }
             if(propreties.Type == "star")
             {
-                planets = 
+                stars = 
                     from s in stars
                     join p in planets on s.st_name equals p.hostname
-                    select p;
+                    select s;
             }
             // Sees if the user wants the increasing order
             if(propreties.CrOrder != null)
