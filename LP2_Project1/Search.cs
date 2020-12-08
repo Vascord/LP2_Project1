@@ -114,48 +114,62 @@ namespace LP2_Project1
                                 pl.hostname.Contains(propreties.HostName));
                             break;
                         case "DiscYear":
-                            SearchFloats(propreties.DiscYear, "disc_year");
+                            SearchPlanetFloats(propreties.DiscYear, "disc_year");
                             break;
                         case "PlOrbper":
-                            SearchFloats(propreties.PlOrbper, "pl_orbper");
+                            SearchPlanetFloats(propreties.PlOrbper, "pl_orbper");
                             break;
                         case "PlRade":
-                            SearchFloats(propreties.PlRade, "pl_rade");
+                            SearchPlanetFloats(propreties.PlRade, "pl_rade");
                             break;
                         case "PlMasse":
-                            SearchFloats(propreties.PlMasse, "pl_masse");
+                            SearchPlanetFloats(propreties.PlMasse, "pl_masse");
                             break;
                         case "PlEqt":
-                            SearchFloats(propreties.PlEqt, "pl_eqt");
+                            SearchPlanetFloats(propreties.PlEqt, "pl_eqt");
                             break;
                         case "StTeff":
-                            SearchFloats(propreties.StTeff, "st_teff");
+                            SearchStarsFloats(propreties.StTeff, "st_teff");
                             break;
                         case "StRad":
-                            SearchFloats(propreties.StRad, "st_rad");
+                            SearchStarsFloats(propreties.StRad, "st_rad");
                             break;
                         case "StMass":
-                            SearchFloats(propreties.StMass, "st_mass");
+                            SearchStarsFloats(propreties.StMass, "st_mass");
                             break;
                         case "StVsin":
-                            SearchFloats(propreties.StVsin, "st_vsin");
+                            SearchStarsFloats(propreties.StVsin, "st_vsin");
                             break;
                         case "StRotp":
-                            SearchFloats(propreties.StRotp, "st_rotp");
+                            SearchStarsFloats(propreties.StRotp, "st_rotp");
                             break;
                         case "SyDist":
-                            SearchFloats(propreties.SyDist, "sy_dist");
+                            SearchStarsFloats(propreties.SyDist, "sy_dist");
                             break;
                         case "StAge":
-                            SearchFloats(propreties.StAge, "st_age");
+                            SearchStarsFloats(propreties.StAge, "st_age");
                             break;
                         case "StPls":
-                            SearchFloats(propreties.StPls, "st_pls");
+                            SearchStarsFloats(propreties.StPls, "st_pls");
                             break;
                     }
                 }
             }
 
+            if(propreties.Type == "planet")
+            {
+                planets = 
+                    from p in planets
+                    join s in stars on p.hostname equals s.st_name
+                    select p;
+            }
+            if(propreties.Type == "star")
+            {
+                planets = 
+                    from s in stars
+                    join p in planets on s.st_name equals p.hostname
+                    select p;
+            }
             // Sees if the user wants the increasing order
             if(propreties.CrOrder != null)
             {
@@ -199,49 +213,41 @@ namespace LP2_Project1
         /// </summary>
         /// <param name="minmax">The value min or max to search</param>
         /// <param name="value">What property to search</param>
-        private void SearchFloats(string[] minmax, string value)
+        private void SearchPlanetFloats(string[] minmax, string value)
         {
-            // Sees if it's for a planet
-            if(propreties.Type == "planet")
+            // If the minimun is not null, then it searchs with the min 
+            // value
+            if (ToNullableFloat(minmax[0]) != null)
             {
-                // If the minimun is not null, then it searchs with the min 
-                // value
-                if (ToNullableFloat(minmax[0]) != null)
-                {
-                    planets = planets.Where(pl => ToNullableFloat(Convert.
-                    ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
-                        >= ToNullableFloat(minmax[0]));
-
-                }
-                // If the maximum is not null, then it searchs with the max 
-                // value
-                if (ToNullableFloat(minmax[1]) != null)
-                {
-                    planets = planets.Where(pl => ToNullableFloat(Convert.
-                    ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
-                        <= ToNullableFloat(minmax[1]));
-                }
+                planets = planets.Where(pl => ToNullableFloat(Convert.
+                ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                    >= ToNullableFloat(minmax[0]));
             }
-            // Sees if it's for a star
-            else
+            // If the maximum is not null, then it searchs with the max 
+            // value
+            if (ToNullableFloat(minmax[1]) != null)
             {
-                // If the minimun is not null, then it searchs with the min 
-                // value
-                if (ToNullableFloat(minmax[0]) != null)
-                {
-                    stars = stars.Where(pl => ToNullableFloat(Convert.
-                    ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
-                        >= ToNullableFloat(minmax[0]));
-
-                }
-                // If the maximum is not null, then it searchs with the max 
-                // value
-                if (ToNullableFloat(minmax[1]) != null)
-                {
-                    stars = stars.Where(pl => ToNullableFloat(Convert.
-                    ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
-                        <= ToNullableFloat(minmax[1]));
-                }
+                planets = planets.Where(pl => ToNullableFloat(Convert.
+                ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                    <= ToNullableFloat(minmax[1]));
+            }
+            
+        }
+        private void SearchStarsFloats(string[] minmax, string value)
+        {
+            if (ToNullableFloat(minmax[0]) != null)
+            {
+                stars = stars.Where(pl => ToNullableFloat(Convert.
+                ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                    >= ToNullableFloat(minmax[0]));
+            }
+            // If the maximum is not null, then it searchs with the max 
+            // value
+            if (ToNullableFloat(minmax[1]) != null)
+            {
+                stars = stars.Where(pl => ToNullableFloat(Convert.
+                ToString(pl.GetType().GetProperty(value).GetValue(pl, null))) 
+                    <= ToNullableFloat(minmax[1]));
             }
         }
 
