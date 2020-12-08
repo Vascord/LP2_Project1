@@ -113,20 +113,20 @@ namespace LP2_Project1
             Console.WriteLine("\n\nHow to search planets :");
             Console.WriteLine("First argument : -- search_planets");
             Console.WriteLine("Essential argument : --file name_of_file");
-            Console.Write("Search arguments :");
-            Console.Write("--discmethod name_of_method_applied_to_disc  |  ");
-            Console.WriteLine("--hostname name_of_star  |  --eqt-min/--eqt-max value_of_eqt  |  --pl_name planets_with_that_name  |  ");
-            Console.Write("--masse-min/--masse-max value_of_mass  |  --rade-min/--rade-max value_of_rad  |  ");
-            Console.WriteLine("--orbper-min/--orbper-max value_of_orbper  |  --discyear-min/--discyear-max value_of_discyear");
 
             Console.WriteLine("\nHow to search stars :");
             Console.WriteLine("First argument : -- search_stars");
             Console.WriteLine("Essential argument : --file name_of_file");
-            Console.Write("Search arguments :");
-            Console.Write("--teff-min/--teff-max value_of_temperature  |  ");
-            Console.WriteLine("--rad-min/rad-max value_of_rad  |  --mass-min/--mass-max value_of_mass  |  --st_name stars_with_that_name  |  ");
-            Console.Write("--vsin-min/--vsin-max value_of_rot_velocity  |  --rotp-min/--rotp-max value_of_star_rot  |  ");
-            Console.WriteLine("--dist-min/--dist-max value_of_dist  |  --age-min/--age-max value_of_age  |  --pls-min/--pls-max number_of_planets");
+
+            Console.Write("\nSearch arguments :");
+            Console.Write("--discmethod name_of_method_applied_to_disc  |  ");
+            Console.WriteLine("--hostname stars_with_that_name  |  --eqt-min/--eqt-max equilibrium_temperature_value_of_a_planet  |");
+            Console.WriteLine("--pl_name planets_with_that_name  |  --masse-min/--masse-max mass_value_of_planets  |  --rade-min/--rade-max radius_value_of_planets  |");
+            Console.WriteLine("--orbper-min/--orbper-max orbital_period_value_of_planets  |  --discyear-min/--discyear-max discovery_year_value_of_planets  |");
+            Console.WriteLine("--teff-min/--teff-max effective_temperature_value_of_stars  |  --rad-min/rad-max radius_value_of_stars  |");
+            Console.WriteLine("--mass-min/--mass-max mass_value_of_stars  |  --vsin-min/--vsin-max rotation_velocity_of_stars  |");
+            Console.WriteLine("--rotp-min/--rotp-max value_of_star_rot  |  --dist-min/--dist-max distance_between_our_Sun_and_the_stars_value  |");
+            Console.WriteLine("--age-min/--age-max age_value_of_stars  |  --pls-min/--pls-max number_of_planets_value_of_stars");
 
             Console.WriteLine("\nHow to search specific planet :");
             Console.WriteLine("First argument : -- planet-info");
@@ -142,7 +142,7 @@ namespace LP2_Project1
             Console.WriteLine("Order arguments : --dr_order value_or_name_to_decreasing_order |  --cr_order value_or_name_to_increasing_order");
             Console.Write("Names for ordering for planets : pl_name | hostname | ");
             Console.WriteLine("discoverymethod | disc_year | pl_orbper | pl_rade | pl_masse | pl_eqt");
-            Console.Write("Names for ordering for stars : st_name | st_teff | ");
+            Console.Write("Names for ordering for stars : hostname | st_teff | ");
             Console.WriteLine("st_rad | st_mass | st_age | st_vsin | st_rotp | sy_dist | st_pls");
         }
         private string Truncate(string s)
