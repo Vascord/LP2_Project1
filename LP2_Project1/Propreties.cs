@@ -16,10 +16,9 @@ namespace LP2_Project1
         /// <value>Name of the file</value>
         public string File {get; private set;}
         /// <summary>
-        /// Auto-implemented property that contains the name of the planet /
-        /// star
+        /// Auto-implemented property that contains the name of the planet
         /// </summary>
-        /// <value>Name of the platnet/star</value>
+        /// <value>Name of the platnet</value>
         public string Name {get; private set;}
         /// <summary>
         /// Auto-implemented property which will permit to know if it's a
@@ -60,10 +59,9 @@ namespace LP2_Project1
         /// <value>String of the value to do order</value>
         public string DrOrder {get; private set;}
         /// <summary>
-        /// Auto-implemented property which contains the star that hosts the
-        /// planet for search
+        /// Auto-implemented property which contains the name of a star 
         /// </summary>
-        /// <value>Name of the star which contains the planet</value>
+        /// <value>Name of the a star</value>
         public string HostName {get; private set;}
         /// <summary>
         /// Auto-implemented property containing value for the discovery year
@@ -127,7 +125,7 @@ namespace LP2_Project1
         /// Auto-implemented property containing the distance between the star
         /// and the Sun for search
         /// </summary>
-        /// <value>distance between the star and the Sun in Parsecs</value>
+        /// <value>Distance between the star and the Sun in Parsecs</value>
         public string[] SyDist {get; private set;}
         /// <summary>
         /// Auto-implemented property containing the age of the star for search
@@ -145,7 +143,6 @@ namespace LP2_Project1
         /// Just permits to end the programs in the user does not put a
         /// correct argument for search
         /// </summary>
-        /// <return> Nothing </return>
         private Propreties()
         {
             // Exit the Program
@@ -160,8 +157,6 @@ namespace LP2_Project1
         /// <param name="type">Search for planet or star</param>
         /// <param name="name">Name of the planet/star</param>
         /// <param name="csv">To know if csv is on or not</param>
-        /// <return> The propreties to create a search for a specific 
-        /// planet/star </return>
         private Propreties(string file, string search, string type, string name,
              string csv)
         {
@@ -198,8 +193,7 @@ namespace LP2_Project1
         /// <param name="rotp">Period of rotation of the star</param>
         /// <param name="dist">Distance between the star and the Sun</param>
         /// <param name="age">Age of the star</param>
-        /// <param name="pls">Planets of the star</param>
-        /// <return> The propreties to create a search of the planets </return>
+        /// <param name="pls">Number of planets of the star</param>
         private Propreties(string file, string search, string type, string name, 
             string host_name, string discMethod, string cvs, string crOrder, 
             string drOrder,string[] discYear, string[] eqt, string[] orbPer, 
@@ -234,7 +228,7 @@ namespace LP2_Project1
 
         /// <summary>
         /// Public static method which will read the initial argument and 
-        /// determinte which type of the search the user wants
+        /// determine which type of the search the user wants
         /// </summary>
         /// <param name="args">Arguments of the user</param>
         /// <return> The propreties for the search </return>
@@ -515,21 +509,24 @@ namespace LP2_Project1
             string name, int index, string[] args)
         {
             // Gives string to the specific property
-            try
+            if(arg == name)
             {
-                cond = args[++index].ToLower();
-                --index;
+                try
+                {
+                    cond = args[++index].ToLower();
+                    --index;
+                }
+                // If the users forgot to put a value to one of his inputs
+                // This will show up
+                catch(IndexOutOfRangeException)
+                {
+                    Console.WriteLine("You gave no value to an argument, please verify your input.");
+                    Console.WriteLine("Invalid Argument : {0}", arg);
+                    Environment.Exit(0);
+                }
             }
-            // If the users forgot to put a value to one of his inputs
-            // This will show up
-            catch(IndexOutOfRangeException)
-            {
-                Console.WriteLine("You gave no value to an argument, please verify your input.");
-                Console.WriteLine("Invalid Argument : {0}", arg);
-                Environment.Exit(0);
-            }
-            
-        return cond;
+
+            return cond;
         }
     }
 }

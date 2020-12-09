@@ -114,10 +114,12 @@ namespace LP2_Project1
                                 pl.hostname.Contains(propreties.HostName));
                             break;
                         case "DiscYear":
-                            SearchPlanetFloats(propreties.DiscYear, "disc_year");
+                            SearchPlanetFloats(propreties.DiscYear, 
+                                "disc_year");
                             break;
                         case "PlOrbper":
-                            SearchPlanetFloats(propreties.PlOrbper, "pl_orbper");
+                            SearchPlanetFloats(propreties.PlOrbper, 
+                                "pl_orbper");
                             break;
                         case "PlRade":
                             SearchPlanetFloats(propreties.PlRade, "pl_rade");

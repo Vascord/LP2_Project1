@@ -3,23 +3,43 @@ using System.Collections.Generic;
 
 namespace LP2_Project1
 {
+    /// <summary>
+    /// Class whose objective is to print out the results of the search
+    /// determined by the user. It can be a normal search, a specific search,
+    /// a csv format search or the help command to print out the guideline
+    /// to do a search
+    /// </summary>
     public class Interface
     {
         private IEnumerable<Planets> planets;
         private IEnumerable<Stars> stars;
         private Propreties propreties;
 
-        public Interface(IEnumerable<Planets> planets, IEnumerable<Stars> stars, Propreties propreties)
+        /// <summary>
+        /// Public constructor to receive the stars and planets enumerables
+        /// and print out the search the user wants
+        /// </summary>
+        /// <param name="planets">Enumerable with the planets</param>
+        /// <param name="stars">Enumerable with the stars</param>
+        /// <param name="propreties">Propreties of the search</param>
+        public Interface(IEnumerable<Planets> planets, IEnumerable<Stars> stars,
+        Propreties propreties)
         {
+            // Variables
             this.planets = planets;
             this.stars = stars;
             this.propreties = propreties;
 
+            // Sees if csv is requested
             if(propreties.CVS == "on")
+                // If it is, then it will show the desired search of the user
+                // in format csv that can be printed out in a file if wanted
                 if (propreties.Type == "planet")
                     PlanetCVSInterface();
                 else
                     StarCVSInterface();
+            // If csv is not requested, then it will show the search in a simple
+            // table
             else
             {
                 if (propreties.Type == "planet")
@@ -29,11 +49,18 @@ namespace LP2_Project1
             }
         }
 
+        /// <summary>
+        /// Public constructor to print out the possible inputs with
+        /// HelpInterface if -- help was called
+        /// </summary>
         public Interface()
         {
             HelpInterface();
         }
 
+        /// <summary>
+        /// Private Method to show the data of the search of planets in a table
+        /// </summary>
         private void PlanetInterface()
         {
             Console.WriteLine();
@@ -46,17 +73,27 @@ namespace LP2_Project1
             Console.WriteLine("-----------------------------------------------------------------------------------------------------------------------------------------------------------------");
             foreach(Planets l in planets)
             {
+                // For each value of the planet, it checks if it is null or not.
+                // If it is, then it shows N/A, else it shows the value that
+                // can be shorten by the method Truncate if necessary.
                 Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20}",
                 String.IsNullOrEmpty(l.pl_name)? "N/A" : Truncate(l.pl_name),
                 String.IsNullOrEmpty(l.hostname)? "N/A" : Truncate(l.hostname),
-                String.IsNullOrEmpty(l.discoverymethod)? "N/A" : Truncate(l.discoverymethod),
-                String.IsNullOrEmpty(l.disc_year)? "N/A" : Truncate(l.disc_year),
-                String.IsNullOrEmpty(l.pl_orbper)? "N/A" : Truncate(l.pl_orbper),
+                String.IsNullOrEmpty(l.discoverymethod)? "N/A" : 
+                    Truncate(l.discoverymethod),
+                String.IsNullOrEmpty(l.disc_year)? "N/A" : 
+                    Truncate(l.disc_year),
+                String.IsNullOrEmpty(l.pl_orbper)? "N/A" : 
+                    Truncate(l.pl_orbper),
                 String.IsNullOrEmpty(l.pl_rade)? "N/A" : Truncate(l.pl_rade),
                 String.IsNullOrEmpty(l.pl_masse)? "N/A" : Truncate(l.pl_masse),
                 String.IsNullOrEmpty(l.pl_eqt)? "N/A" : Truncate(l.pl_eqt));
             }
         }
+
+        /// <summary>
+        /// Private Method to show the data of the search of stars in a table
+        /// </summary>
         private void StarInterface()
         {
             Console.WriteLine();
@@ -69,6 +106,9 @@ namespace LP2_Project1
             Console.WriteLine("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             foreach(Stars l in stars)
             {
+                // For each value of the star, it checks if it is null or not.
+                // If it is, then it shows N/A, else it shows the value that
+                // can be shorten by the method Truncate if necessary.
                 Console.WriteLine("{0,-20} {1,-20} {2,-20} {3,-20} {4,-20} {5,-20} {6,-20} {7,-20} {8,-20}",
                 String.IsNullOrEmpty(l.st_name)? "N/A" : Truncate(l.st_name), 
                 String.IsNullOrEmpty(l.st_teff)? "N/A" : Truncate(l.st_teff),
@@ -82,8 +122,10 @@ namespace LP2_Project1
             }
         }
 
-        
-
+        /// <summary>
+        /// Private Method to show the data of the search of planets in
+        /// csv format
+        /// </summary>
         private void PlanetCVSInterface()
         {
             Console.WriteLine();
@@ -96,6 +138,10 @@ namespace LP2_Project1
             }
         }
 
+        /// <summary>
+        /// Private Method to show the data of the search of stars in
+        /// csv format
+        /// </summary>
         private void StarCVSInterface()
         {
             Console.WriteLine();
@@ -108,6 +154,9 @@ namespace LP2_Project1
             }
         }
 
+        /// <summary>
+        /// Private Method to show the inputs to the user
+        /// </summary>
         private void HelpInterface()
         {
             Console.WriteLine("\n\nHow to search planets :");
@@ -145,9 +194,18 @@ namespace LP2_Project1
             Console.Write("Names for ordering for stars : hostname | st_teff | ");
             Console.WriteLine("st_rad | st_mass | st_age | st_vsin | st_rotp | sy_dist | st_pls");
         }
+
+        /// <summary>
+        /// Private Method which substrings a string if it's too long 
+        /// (+20 characters)
+        /// </summary>
+        /// <param name="s">String which will, or not, be reduced</param>
+        /// <return> The now shorthen, or not, string </return>
         private string Truncate(string s)
         {
-            s = s.Length <= 17? s : s.Substring(0, 17) + "...";
+            // Sees if the string is above 20 characters. If it is, then it's
+            // shorthen. Else, it just returns the string normally.
+            s = s.Length <= 20? s : s.Substring(0, 17) + "...";
             return s;
         }
     }

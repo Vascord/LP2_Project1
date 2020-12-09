@@ -6,6 +6,8 @@ using System.Globalization;
 
 namespace LP2_Project1 
 {
+    /// <summary>
+    /// </summary>
     public class ReadFile
     {
         private string filename;
@@ -18,10 +20,23 @@ namespace LP2_Project1
 
         public List<Stars> stars;
 
+        /// <summary>
+        /// </summary>
+        /// <value></value>
         public IEnumerable<Stars> s {get; set;}
+        /// <summary>
+        /// </summary>
+        /// <value></value>
         public IEnumerable<Stars> s2 {get; set;}
+        /// <summary>
+        /// </summary>
+        /// <value></value>
         public IEnumerable<Planets> p {get; set;}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename"></param>
         public ReadFile(string filename)
         {
             this.filename = filename;
@@ -34,10 +49,16 @@ namespace LP2_Project1
             incorrectTypeError = false;
             File();
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private void File()
         {
-            int? pl_name = null, hostname = null, discoverymethod= null, disc_year= null, pl_orbper= null, pl_rade = null, pl_masse = null, pl_eqt= null,
-                st_teff = null, st_rad = null, st_mass= null, st_vsin = null, st_rotp = null, sy_dist= null, st_age=null;
+            int? pl_name = null, hostname = null, discoverymethod= null, 
+                disc_year= null, pl_orbper= null, pl_rade = null, 
+                pl_masse = null, pl_eqt= null,st_teff = null, st_rad = null, 
+                st_mass= null, st_vsin = null, st_rotp = null, sy_dist= null, 
+                st_age=null;
 
             int columnNr = 0;
             string[] FirstLineColumns;
@@ -46,7 +67,8 @@ namespace LP2_Project1
             float temp;
             string[] lines = null;
 
-            string path = path  = Path.Combine(Environment.CurrentDirectory, filename);
+            string path = path  = Path.Combine(Environment.CurrentDirectory, 
+                filename);
             try
             {                
                 lines = System.IO.File.ReadAllLines(path);
@@ -126,19 +148,32 @@ namespace LP2_Project1
                 {
                     colums = line.Split(',');
 
-                    //Used for verification of fille possible errors and to fill planets.cs and stars.cs
-                    nr = new string[] {st_teff == null ? null : colums[st_teff.GetValueOrDefault()].Trim(), 
-                        st_rad == null ? null : colums[st_rad.GetValueOrDefault()].Trim(), 
-                        st_mass == null ? null : colums[st_mass.GetValueOrDefault()].Trim(), 
-                        st_age == null ? null : colums[st_age.GetValueOrDefault()].Trim(), 
-                        st_vsin == null ? null : colums[st_vsin.GetValueOrDefault()].Trim(), 
-                        st_rotp == null ? null : colums[st_rotp.GetValueOrDefault()].Trim(),
-                        sy_dist == null ? null : colums[sy_dist.GetValueOrDefault()].Trim(), 
-                        disc_year == null ? null : colums[disc_year.GetValueOrDefault()].Trim(),
-                        pl_orbper == null ? null : colums[pl_orbper.GetValueOrDefault()].Trim(), 
-                        pl_rade == null ? null : colums[pl_rade.GetValueOrDefault()].Trim(),
-                        pl_masse == null ? null : colums[pl_masse.GetValueOrDefault()].Trim(), 
-                        pl_eqt == null ? null : colums[pl_eqt.GetValueOrDefault()].Trim()};
+                    //Used for verification of fille possible errors and to 
+                    //fill planets.cs and stars.cs
+                    nr = new string[] {st_teff == null ? null : 
+                        colums[st_teff.GetValueOrDefault()].Trim(), 
+                        st_rad == null ? null : 
+                            colums[st_rad.GetValueOrDefault()].Trim(), 
+                        st_mass == null ? null : 
+                            colums[st_mass.GetValueOrDefault()].Trim(), 
+                        st_age == null ? null : 
+                            colums[st_age.GetValueOrDefault()].Trim(), 
+                        st_vsin == null ? null : 
+                            colums[st_vsin.GetValueOrDefault()].Trim(), 
+                        st_rotp == null ? null : 
+                            colums[st_rotp.GetValueOrDefault()].Trim(),
+                        sy_dist == null ? null : 
+                            colums[sy_dist.GetValueOrDefault()].Trim(), 
+                        disc_year == null ? null : 
+                            colums[disc_year.GetValueOrDefault()].Trim(),
+                        pl_orbper == null ? null : 
+                            colums[pl_orbper.GetValueOrDefault()].Trim(), 
+                        pl_rade == null ? null : 
+                            colums[pl_rade.GetValueOrDefault()].Trim(),
+                        pl_masse == null ? null : 
+                            colums[pl_masse.GetValueOrDefault()].Trim(), 
+                        pl_eqt == null ? null : 
+                            colums[pl_eqt.GetValueOrDefault()].Trim()};
 
                     //Verification of fille possible errors
                     if (colums.Length != columnNr)
@@ -150,29 +185,39 @@ namespace LP2_Project1
                         if (String.IsNullOrEmpty(s) == false && 
                             float.TryParse(s, out temp) == false)
                             incorrectTypeError = true;
-                        if(String.IsNullOrEmpty(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].Trim()))
+                        if(String.IsNullOrEmpty(pl_name == null ? null : 
+                        colums[pl_name.GetValueOrDefault()].Trim()))
                             minInfoError = true;
-                        if(String.IsNullOrEmpty(hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim()))
+                        if(String.IsNullOrEmpty(hostname == null ? null : 
+                        colums[hostname.GetValueOrDefault()].Trim()))
                             minInfoError = true;
                     }
 
                     //planets list completion
-                    planets.Add(new Planets(pl_name == null ? null : colums[pl_name.GetValueOrDefault()].Trim(), 
-                        hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
-                        discoverymethod == null ? null : colums[discoverymethod.GetValueOrDefault()].Trim(), 
+                    planets.Add(new Planets(pl_name == null ? null : 
+                        colums[pl_name.GetValueOrDefault()].Trim(), 
+                        hostname == null ? null : 
+                        colums[hostname.GetValueOrDefault()].Trim(), 
+                        discoverymethod == null ? null : 
+                        colums[discoverymethod.GetValueOrDefault()].Trim(), 
                         nr[7], nr[8], nr[9], nr[10], nr[11])); 
 
                     //stars list completion
-                    stars.Add(new Stars(hostname == null ? null : colums[hostname.GetValueOrDefault()].Trim(), 
+                    stars.Add(new Stars(hostname == null ? null : 
+                        colums[hostname.GetValueOrDefault()].Trim(), 
                         nr[0], nr[1], nr[2], nr[3], nr[4], nr[5], nr[6], null));
                 }
             }
             // If there is a error in the file calls FilleErrorsOutput()
-            if(columnError || minInfoError || incorrectTypeError) FileErrorsOutput();
+            if(columnError || minInfoError || incorrectTypeError) 
+                FileErrorsOutput();
 
             FillIEnumerables();           
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void FillIEnumerables()
         {
             //Assigns the correct lists to the IEnumerables
@@ -183,7 +228,8 @@ namespace LP2_Project1
             // Removes duplicates from s
             s = s.Distinct(new StarComparer());
 
-            //Gathers iformation from duplicate stars in s2 and fills in stars in s with extra information
+            //Gathers iformation from duplicate stars in s2 and fills in stars 
+            // in s with extra information
             foreach(Stars st in s)
             {
                 int count = 0;
@@ -212,6 +258,10 @@ namespace LP2_Project1
                 }
             } 
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void FileErrorsOutput()
         {
             Console.WriteLine("\nFile ({0}) has an error:", filename);
