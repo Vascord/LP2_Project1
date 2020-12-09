@@ -236,6 +236,8 @@ namespace LP2_Project1
         }
         private void SearchStarsFloats(string[] minmax, string value)
         {
+            // If the maximum is not null, then it searchs with the min
+            // value
             if (ToNullableFloat(minmax[0]) != null)
             {
                 stars = stars.Where(pl => ToNullableFloat(Convert.

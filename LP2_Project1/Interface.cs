@@ -111,11 +111,11 @@ namespace LP2_Project1
         private void HelpInterface()
         {
             Console.WriteLine("\n\nHow to search planets :");
-            Console.WriteLine("First argument : -- search_planets");
+            Console.WriteLine("First argument : -- search-planets");
             Console.WriteLine("Essential argument : --file name_of_file");
 
             Console.WriteLine("\nHow to search stars :");
-            Console.WriteLine("First argument : -- search_stars");
+            Console.WriteLine("First argument : -- search-stars");
             Console.WriteLine("Essential argument : --file name_of_file");
 
             Console.Write("\nSearch arguments :");

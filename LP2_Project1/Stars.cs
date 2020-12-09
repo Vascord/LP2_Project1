@@ -26,8 +26,5 @@ namespace LP2_Project1
             this.st_pls = st_pls;
 
         }
-
-        
-        
     }
 }

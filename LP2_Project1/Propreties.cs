@@ -463,16 +463,38 @@ namespace LP2_Project1
             if(arg == name1)
             {
                 // Gives string to the specific property
-                cond[0] = args[++index].ToLower();
-                --index;
+                try
+                {
+                    cond[0] = args[++index].ToLower();
+                    --index;
+                }
+                // If the users forgot to put a value to one of his inputs
+                // This will show up
+                catch(IndexOutOfRangeException)
+                {
+                    Console.WriteLine("You gave no value to an argument, please verify your input.");
+                    Console.WriteLine("Invalid Argument : {0}", arg);
+                    Environment.Exit(0);
+                }
             }
 
             // For max value
             else if(arg == name2)
             {
                 // Gives string to the specific property
-                cond[1] = args[++index].ToLower();
-                --index;       
+                try
+                {
+                    cond[1] = args[++index].ToLower();
+                    --index;      
+                }
+                // If the users forgot to put a value to one of his inputs
+                // This will show up
+                catch(IndexOutOfRangeException)
+                {
+                    Console.WriteLine("You gave no value to an argument, please verify your input.");
+                    Console.WriteLine("Invalid Argument : {0}", arg);
+                    Environment.Exit(0);
+                }
             }
 
             return cond;
@@ -492,12 +514,22 @@ namespace LP2_Project1
         private static string CondString(string cond, string arg, 
             string name, int index, string[] args)
         {
-            
             // Gives string to the specific property
-            cond = args[++index].ToLower();
-            --index;
-
-            return cond;
+            try
+            {
+                cond = args[++index].ToLower();
+                --index;
+            }
+            // If the users forgot to put a value to one of his inputs
+            // This will show up
+            catch(IndexOutOfRangeException)
+            {
+                Console.WriteLine("You gave no value to an argument, please verify your input.");
+                Console.WriteLine("Invalid Argument : {0}", arg);
+                Environment.Exit(0);
+            }
+            
+        return cond;
         }
     }
 }
