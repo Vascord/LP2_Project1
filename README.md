@@ -23,8 +23,7 @@ Nelson Salvador 21904295 | Vasco Duarte 21905658 | Francisco Costa 21903228
 #### Francisco Costa
 Não trabalhou no projeto
 
-#### Link do Git
-...
+#### [Link GitHub] (https://github.com/Vascord/LP2_Project1)
 
 ### Arquitetura da Solução
 
