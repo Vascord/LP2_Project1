@@ -13,11 +13,13 @@ namespace LP2_Project1
     {
 
         private Propreties propreties;
+
         /// <summary>
         /// Auto-implemented property that contains all the planets of the file
         /// </summary>
         /// <value>The collection of all the planets</value>
         public IEnumerable<Planets> planets {get; set;}
+
         /// <summary>
         /// Auto-implemented property that contains all the stars of the file
         /// </summary>
@@ -27,9 +29,9 @@ namespace LP2_Project1
         /// <summary>
         /// Public constructor that will launch the search process
         /// </summary>
-        /// <param name="planets">Name of the file</param>
-        /// <param name="stars">Type of search</param>
-        /// <param name="propreties">Search for planet or star</param>
+        /// <param name="planets">Planets Information</param>
+        /// <param name="stars">Stars Information</param>
+        /// <param name="propreties">Proprerties arguments</param>
         /// <return> Returns the actualized the enumerables after the 
         /// search </return>
         public Search(IEnumerable<Planets> planets, IEnumerable<Stars> stars, 
