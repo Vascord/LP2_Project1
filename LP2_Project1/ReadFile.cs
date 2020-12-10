@@ -7,53 +7,91 @@ using System.Globalization;
 namespace LP2_Project1 
 {
     /// <summary>
+    /// Class which reads the given file and stores the data in the the 
+    /// collections
     /// </summary>
     public class ReadFile
     {
+        /// <summary>
+        /// File name/path
+        /// </summary>
         private string filename;
+
+        /// <summary>
+        /// True if first non commet line has reached
+        /// </summary>
         private bool firstLine;
+
+        /// <summary>
+        /// True if there is a column error in the file 
+        /// </summary>
         private bool columnError;
+
+        /// <summary>
+        /// True if the file hasn't the minimum information
+        /// </summary>
         private bool minInfoError;
+
+        /// <summary>
+        /// True if the file has incorrect types
+        /// </summary>
         private bool incorrectTypeError;
 
+        /// <summary>
+        /// List of Planets
+        /// </summary>
         public List<Planets> planets;
 
+        /// <summary>
+        /// List of Stars
+        /// </summary>
         public List<Stars> stars;
 
         /// <summary>
+        /// Auto-implemented property 
+        /// Stores all of distinct star information
         /// </summary>
-        /// <value></value>
+        /// <value>Stars information</value>
         public IEnumerable<Stars> s {get; set;}
+
         /// <summary>
+        /// Auto-implemented property 
+        /// Stores all of star information, used to complete the distinc star
+        /// information 
         /// </summary>
-        /// <value></value>
+        /// <value>Stars information</value>
         public IEnumerable<Stars> s2 {get; set;}
+
         /// <summary>
+        /// Auto-implemented property that contains all the planets of the file
         /// </summary>
-        /// <value></value>
+        /// <value>Planets information</value>
         public IEnumerable<Planets> p {get; set;}
 
         /// <summary>
-        /// 
+        /// Public constructor that will launch the read file process
         /// </summary>
-        /// <param name="filename"></param>
+        /// <param name="filename">File path</param>
         public ReadFile(string filename)
         {
+            //variables assigment
             this.filename = filename;
-            planets = new List<Planets>();
-            stars = new List<Stars>();
-
             firstLine = true;
             columnError = false;
             minInfoError = false;
             incorrectTypeError = false;
+
+            planets = new List<Planets>();
+            stars = new List<Stars>();
             File();
         }
+
         /// <summary>
-        /// 
+        /// Method that reads the file and stores the data
         /// </summary>
         private void File()
         {
+            // variables 
             int? pl_name = null, hostname = null, discoverymethod= null, 
                 disc_year= null, pl_orbper= null, pl_rade = null, 
                 pl_masse = null, pl_eqt= null,st_teff = null, st_rad = null, 
@@ -67,8 +105,11 @@ namespace LP2_Project1
             float temp;
             string[] lines = null;
 
+            // combines the file name with the current directory
             string path = path  = Path.Combine(Environment.CurrentDirectory, 
                 filename);
+            
+            // Sees if the file exists 
             try
             {                
                 lines = System.IO.File.ReadAllLines(path);
@@ -88,11 +129,18 @@ namespace LP2_Project1
                 
             }
 
+            /// <summary>
+            /// Stores the lines in lower case
+            /// </summary>
+            /// <returns> String Line in lower case</returns>
             IEnumerable<string> lowerNames = lines.Select(l => l.ToLower());
 
+            // Cicles trough LowerNames 
             foreach(string line in lowerNames)
             {
+                // Sees if string is not null or empty
                 if (String.IsNullOrEmpty(line)){}
+                // Ignores the comments
                 else if (line[0] == '#'){}
                 else if (firstLine)
                 {
@@ -224,7 +272,7 @@ namespace LP2_Project1
         }
 
         /// <summary>
-        /// 
+        /// Fills the IEnumerables correctly 
         /// </summary>
         private void FillIEnumerables()
         {
@@ -236,7 +284,7 @@ namespace LP2_Project1
             // Removes duplicates from s
             s = s.Distinct(new StarComparer());
 
-            //Gathers iformation from duplicate stars in s2 and fills in stars 
+            //Gathers information from duplicate stars in s2 and fills in stars 
             // in s with extra information
             foreach(Stars st in s)
             {
@@ -268,7 +316,7 @@ namespace LP2_Project1
         }
 
         /// <summary>
-        /// 
+        /// Outputs the errors and stops the program 
         /// </summary>
         private void FileErrorsOutput()
         {
@@ -278,7 +326,8 @@ namespace LP2_Project1
             Console.WriteLine("- Number of columns of a line" +
                 " does not correspond to the number of fields of the file");
             if(minInfoError)
-                Console.WriteLine("- File does not have the minimum fields required");
+                Console.WriteLine("- File does not have the minimum fields" +
+                    "required");
             if(incorrectTypeError)
                 Console.WriteLine("- File contains fields with incorrect types");
             
