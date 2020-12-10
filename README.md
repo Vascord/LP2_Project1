@@ -27,6 +27,10 @@ Não trabalhou no projeto
 
 ### Arquitetura da Solução
 
+### UML
+
+![Diagrama de classes](UML.png)
+
 #### Forma de implementação
 - Consola não-interativo
 
