@@ -75,9 +75,17 @@ namespace LP2_Project1
             }
             catch(FileNotFoundException)
             {
-                Console.WriteLine("\nFile Not Found:");
-                Console.WriteLine(path);
-                Environment.Exit(0);
+                try
+                {
+                    lines = System.IO.File.ReadAllLines(filename);
+                }
+                catch(FileNotFoundException)
+                {
+                    Console.WriteLine("\nFile Not Found:");
+                    Console.WriteLine(path);
+                    Environment.Exit(0);
+                }
+                
             }
 
             IEnumerable<string> lowerNames = lines.Select(l => l.ToLower());
